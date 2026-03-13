@@ -1,0 +1,35 @@
+spring:
+    application:
+        name: event-approval-system
+
+    datasource:
+        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tubit_event_db}
+        username: ${DB_USERNAME:postgres}
+        password: ${DB_PASSWORD:123}
+        driver-class-name: org.postgresql.Driver
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+
+    servlet:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 10MB
+
+server:
+    port: ${SERVER_PORT:8080}
+
+# JWT Configuration
+app:
+    jwt:
+        secret: ${JWT_SECRET:VGhpcyBpcyBhIHZlcnkgc2VjdXJlIHNlY3JldCBrZXkgZm9yIFRVQklUIEV2ZW50IEFwcHJvdmFsIFN5c3RlbSEhIQ==}
+        expiration-ms: ${JWT_EXPIRATION:86400000}
+
+    document:
+        output-dir: ${DOCUMENT_OUTPUT_DIR:./generated-documents}
