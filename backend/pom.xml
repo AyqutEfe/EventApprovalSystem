@@ -9,11 +9,11 @@
 		<relativePath/>
 	</parent>
 
-	<groupId>tr.edu.trakya.tubit</groupId>
+	<groupId>tr.edu.trakya.kycuby</groupId>
 	<artifactId>event-approval-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>event-approval-system</name>
-	<description>TÜBİT Üniversite Kulüp Etkinlik Onay ve Belge Otomasyon Sistemi</description>
+	<name>kycuby-event-approval-system</name>
+	<description>Kycuby Üniversite Kulüp Etkinlik Onay ve Belge Otomasyon Sistemi</description>
 
 	<properties>
 		<java.version>17</java.version>

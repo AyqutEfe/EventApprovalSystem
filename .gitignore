@@ -1,0 +1,13 @@
+# Root
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+
+README.md
+
+
