@@ -42,6 +42,16 @@ public class PetitionController {
     }
 
     /**
+     * Takvim görünümü için tüm aktif dilekçeleri listeler (REJECTED hariç).
+     * Tüm authenticated kullanıcılar erişebilir.
+     */
+    @GetMapping("/calendar")
+    public ResponseEntity<List<PetitionResponse>> getCalendarPetitions() {
+        List<PetitionResponse> petitions = petitionService.getCalendarPetitions();
+        return ResponseEntity.ok(petitions);
+    }
+
+    /**
      * Giriş yapan kullanıcının kendi dilekçelerini listeler.
      */
     @GetMapping("/me")

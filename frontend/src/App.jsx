@@ -29,10 +29,10 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-      {/* Dashboard — rol bazlı yönlendirme */}
+      {/* Dashboard — Takvim Görünümü */}
       <Route path="/dashboard" element={
         <ProtectedRoute>
-          <DashboardPage />
+          <Layout><DashboardPage /></Layout>
         </ProtectedRoute>
       } />
 

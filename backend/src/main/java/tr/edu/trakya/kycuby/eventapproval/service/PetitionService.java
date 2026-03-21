@@ -181,6 +181,16 @@ public class PetitionService {
     }
 
     /**
+     * Takvim görünümü: REJECTED hariç tüm dilekçeler.
+     */
+    public List<PetitionResponse> getCalendarPetitions() {
+        List<Petition> petitions = petitionRepository.findAll().stream()
+                .filter(p -> p.getStatus() != PetitionStatus.REJECTED)
+                .toList();
+        return petitionMapper.toResponseList(petitions);
+    }
+
+    /**
      * Başkanın kendi dilekçelerini listeler.
      */
     public List<PetitionResponse> getMyPetitions(String username) {

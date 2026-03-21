@@ -6,4 +6,7 @@ export const petitionService = {
   getMyPetitions: () => api.get('/petitions/me'),
   getById: (id) => api.get(`/petitions/${id}`),
   download: (id) => api.get(`/petitions/${id}/download`, { responseType: 'blob' }),
+
+  // Takvim (tüm roller)
+  getCalendar: () => api.get('/petitions/calendar'),
 };
