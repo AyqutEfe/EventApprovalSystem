@@ -46,7 +46,30 @@ export default function AdvisorPetitionDetailPage() {
       toast.error(error.response?.data?.message || 'İşlem başarısız');
     } finally {
       setActionLoading(false);
-      setModal({ open: false, type: null });
+      setModal({ open: false, type: null, customMessage: null });
+    }
+  };
+
+  const handleApproveClick = async () => {
+    setActionLoading(true);
+    try {
+      const { data: events } = await petitionService.checkDate(petition.eventDate);
+      const otherEvents = events.filter(e => e.id !== petition.id);
+      
+      if (otherEvents.length > 0) {
+        const eventNames = otherEvents.map(e => e.eventName).join(', ');
+        setModal({ 
+          open: true, 
+          type: 'approve', 
+          customMessage: `Bu tarihte ${eventNames} etkinliği var. Yine de onaylamak istiyor musunuz?` 
+        });
+      } else {
+        setModal({ open: true, type: 'approve' });
+      }
+    } catch (error) {
+       toast.error('Tarih kontrolü başarısız oldu');
+    } finally {
+       setActionLoading(false);
     }
   };
 
@@ -106,7 +129,7 @@ export default function AdvisorPetitionDetailPage() {
               Reddet
             </button>
             <button
-              onClick={() => setModal({ open: true, type: 'approve' })}
+              onClick={handleApproveClick}
               className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition cursor-pointer shadow-lg shadow-emerald-600/30"
             >
               Onayla
@@ -117,10 +140,10 @@ export default function AdvisorPetitionDetailPage() {
 
       <Modal
         isOpen={modal.open}
-        onClose={() => setModal({ open: false, type: null })}
+        onClose={() => setModal({ open: false, type: null, customMessage: null })}
         onConfirm={handleAction}
         title={modal.type === 'approve' ? 'Dilekçeyi Onayla' : 'Dilekçeyi Reddet'}
-        message={`"${petition.eventName}" dilekçesi ${modal.type === 'approve' ? 'onaylanacak' : 'reddedilecek'}. Emin misiniz?`}
+        message={modal.customMessage || `"${petition.eventName}" dilekçesi ${modal.type === 'approve' ? 'onaylanacak' : 'reddedilecek'}. Emin misiniz?`}
         confirmText={modal.type === 'approve' ? 'Onayla' : 'Reddet'}
         confirmColor={modal.type === 'approve' ? 'green' : 'red'}
         loading={actionLoading}

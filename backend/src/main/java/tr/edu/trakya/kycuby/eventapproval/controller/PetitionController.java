@@ -42,6 +42,15 @@ public class PetitionController {
     }
 
     /**
+     * Belirli bir tarihteki onaylanmış/bekleyen etkinlikleri kontrol eder.
+     */
+    @GetMapping("/check-date")
+    public ResponseEntity<List<PetitionResponse>> checkDate(@RequestParam java.time.LocalDate date) {
+        List<PetitionResponse> petitions = petitionService.getPetitionsByDate(date);
+        return ResponseEntity.ok(petitions);
+    }
+
+    /**
      * Takvim görünümü için tüm aktif dilekçeleri listeler (REJECTED hariç).
      * Tüm authenticated kullanıcılar erişebilir.
      */

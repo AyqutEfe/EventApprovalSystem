@@ -21,6 +21,8 @@ public interface PetitionRepository extends JpaRepository<Petition, Long> {
 
     List<Petition> findByStatusIn(List<PetitionStatus> statuses);
 
+    List<Petition> findByEventDateAndStatusIn(LocalDate eventDate, List<PetitionStatus> statuses);
+
     /**
      * Takvim çakışması kontrolü: aynı tarih ve lokasyonda onaylanmış etkinlik var mı?
      */

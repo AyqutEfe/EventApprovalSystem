@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { petitionService } from '../../services/petitionService';
 import toast from 'react-hot-toast';
 
+import Modal from '../../components/Modal';
+
 const schema = z.object({
   eventName: z.string().min(1, 'Etkinlik adı boş olamaz'),
   eventDate: z.string().min(1, 'Etkinlik tarihi boş olamaz'),
@@ -15,16 +17,42 @@ const schema = z.object({
 
 export default function CreatePetitionPage() {
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [conflictMessage, setConflictMessage] = useState('');
+  const [pendingData, setPendingData] = useState(null);
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data) => {
+  const checkConflictsAndSubmit = async (data) => {
     setLoading(true);
     try {
-      await petitionService.create(data);
+      const { data: events } = await petitionService.checkDate(data.eventDate);
+      
+      if (events && events.length > 0) {
+        // Çakışma var
+        const eventNames = events.map(e => e.eventName).join(', ');
+        setConflictMessage(`Bu tarihte ${eventNames} etkinliği var. Yine de talep göndermek istiyor musunuz?`);
+        setPendingData(data);
+        setModalOpen(true);
+        setLoading(false);
+      } else {
+        // Çakışma yok
+        doSubmit(data);
+      }
+    } catch (error) {
+      toast.error('Tarih kontrolü yapılamadı.');
+      setLoading(false);
+    }
+  };
+
+  const doSubmit = async (dataToSubmit) => {
+    setLoading(true);
+    setModalOpen(false);
+    try {
+      await petitionService.create(dataToSubmit);
       toast.success('Dilekçe başarıyla oluşturuldu!');
       navigate('/petitions/my');
     } catch (error) {
@@ -32,6 +60,7 @@ export default function CreatePetitionPage() {
       toast.error(message);
     } finally {
       setLoading(false);
+      setPendingData(null);
     }
   };
 
@@ -43,7 +72,7 @@ export default function CreatePetitionPage() {
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(checkConflictsAndSubmit)} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1.5">Etkinlik Adı</label>
             <input
@@ -98,11 +127,25 @@ export default function CreatePetitionPage() {
               disabled={loading}
               className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition disabled:opacity-50 cursor-pointer shadow-lg shadow-blue-600/30"
             >
-              {loading ? 'Oluşturuluyor...' : 'Dilekçe Oluştur'}
+              {loading ? 'İşleniyor...' : 'Dilekçe Oluştur'}
             </button>
           </div>
         </form>
       </div>
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setPendingData(null);
+        }}
+        onConfirm={() => doSubmit(pendingData)}
+        title="Takvim Çakışması"
+        message={conflictMessage}
+        confirmText="Yine De Gönder"
+        confirmColor="blue"
+        loading={loading}
+      />
     </div>
   );
 }

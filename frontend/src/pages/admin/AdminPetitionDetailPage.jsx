@@ -47,7 +47,30 @@ export default function AdminPetitionDetailPage() {
       toast.error(message);
     } finally {
       setActionLoading(false);
-      setModal({ open: false, type: null });
+      setModal({ open: false, type: null, customMessage: null });
+    }
+  };
+
+  const handleApproveClick = async () => {
+    setActionLoading(true);
+    try {
+      const { data: events } = await petitionService.checkDate(petition.eventDate);
+      const otherEvents = events.filter(e => e.id !== petition.id);
+      
+      if (otherEvents.length > 0) {
+        const eventNames = otherEvents.map(e => e.eventName).join(', ');
+        setModal({ 
+          open: true, 
+          type: 'approve', 
+          customMessage: `Bu tarihte ${eventNames} etkinliği var. Yine de onaylamak istiyor musunuz?` 
+        });
+      } else {
+        setModal({ open: true, type: 'approve' });
+      }
+    } catch (error) {
+       toast.error('Tarih kontrolü başarısız oldu');
+    } finally {
+       setActionLoading(false);
     }
   };
 
@@ -106,21 +129,6 @@ export default function AdminPetitionDetailPage() {
           <p className="text-slate-300 leading-relaxed">{petition.description}</p>
         </div>
 
-        {/* Takvim çakışması uyarısı bilgisi */}
-        {petition.status === 'PENDING_ADMIN' && (
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6">
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-              <div>
-                <p className="text-amber-400 text-sm font-medium">Takvim Çakışması Kontrolü</p>
-                <p className="text-amber-300/70 text-xs mt-1">Onay verildiğinde aynı tarih ve lokasyonda başka bir onaylı etkinlik varsa sistem çakışma hatası döndürecektir.</p>
-              </div>
-            </div>
-          </div>
-        )}
-
         {petition.status === 'PENDING_ADMIN' && (
           <div className="flex gap-3 pt-4 border-t border-slate-800">
             <button
@@ -130,7 +138,7 @@ export default function AdminPetitionDetailPage() {
               Reddet
             </button>
             <button
-              onClick={() => setModal({ open: true, type: 'approve' })}
+              onClick={handleApproveClick}
               className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition cursor-pointer shadow-lg shadow-emerald-600/30"
             >
               Final Onay Ver
@@ -141,10 +149,10 @@ export default function AdminPetitionDetailPage() {
 
       <Modal
         isOpen={modal.open}
-        onClose={() => setModal({ open: false, type: null })}
+        onClose={() => setModal({ open: false, type: null, customMessage: null })}
         onConfirm={handleAction}
         title={modal.type === 'approve' ? 'Final Onay' : 'Dilekçeyi Reddet'}
-        message={`"${petition.eventName}" dilekçesi ${modal.type === 'approve' ? 'onaylanacak' : 'reddedilecek'}. ${modal.type === 'approve' ? 'Takvim çakışması kontrolü yapılacaktır.' : ''} Emin misiniz?`}
+        message={modal.customMessage || `"${petition.eventName}" dilekçesi ${modal.type === 'approve' ? 'onaylanacak' : 'reddedilecek'}. Emin misiniz?`}
         confirmText={modal.type === 'approve' ? 'Onayla' : 'Reddet'}
         confirmColor={modal.type === 'approve' ? 'green' : 'red'}
         loading={actionLoading}

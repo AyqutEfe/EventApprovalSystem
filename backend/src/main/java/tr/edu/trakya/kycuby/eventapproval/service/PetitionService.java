@@ -16,6 +16,7 @@ import tr.edu.trakya.kycuby.eventapproval.exception.ResourceNotFoundException;
 import tr.edu.trakya.kycuby.eventapproval.mapper.PetitionMapper;
 import tr.edu.trakya.kycuby.eventapproval.repository.PetitionRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -117,8 +118,8 @@ public class PetitionService {
             throw new BusinessException("Bu dilekçe admin onayı beklenmiyor. Mevcut durum: " + petition.getStatus());
         }
 
-        // Takvim çakışması kontrolü
-        checkDateConflict(petition);
+        // Takvim çakışması kontrolü artık frontend'de uyarı olarak yapılıyor, burada engellemiyoruz.
+        // checkDateConflict(petition);
 
         petition.setStatus(PetitionStatus.APPROVED);
         Petition updated = petitionRepository.save(petition);
@@ -226,28 +227,13 @@ public class PetitionService {
     }
 
     /**
-     * Aynı tarih ve lokasyonda onaylanmış veya onay bekleyen etkinlik var mı kontrol eder.
+     * Belirli bir tarihteki onaylanmış veya onay bekleyen etkinlikleri getirir (Takvim çakışması uyarısı için).
      */
-    private void checkDateConflict(Petition petition) {
-        boolean conflict = petitionRepository.existsByEventDateAndLocationAndStatusIn(
-                petition.getEventDate(),
-                petition.getLocation(),
-                List.of(PetitionStatus.APPROVED, PetitionStatus.PENDING_ADMIN)
+    public List<PetitionResponse> getPetitionsByDate(LocalDate date) {
+        List<Petition> petitions = petitionRepository.findByEventDateAndStatusIn(
+                date,
+                List.of(PetitionStatus.APPROVED, PetitionStatus.PENDING_ADMIN, PetitionStatus.PENDING_ADVISOR)
         );
-
-        if (conflict) {
-            // Kendisi hariç çakışma var mı kontrol et
-            List<Petition> conflicting = petitionRepository.findByStatus(PetitionStatus.APPROVED);
-            boolean realConflict = conflicting.stream()
-                    .filter(p -> !p.getId().equals(petition.getId()))
-                    .anyMatch(p -> p.getEventDate().equals(petition.getEventDate())
-                            && p.getLocation().equalsIgnoreCase(petition.getLocation()));
-
-            if (realConflict) {
-                throw new BusinessException(String.format(
-                        "Takvim çakışması! %s tarihinde '%s' lokasyonunda zaten onaylanmış bir etkinlik bulunuyor.",
-                        petition.getEventDate(), petition.getLocation()));
-            }
-        }
+        return petitionMapper.toResponseList(petitions);
     }
 }
