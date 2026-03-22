@@ -1,4 +1,4 @@
-export default function Modal({ isOpen, onClose, onConfirm, title, message, confirmText = 'Onayla', confirmColor = 'blue', loading = false }) {
+export default function Modal({ isOpen, onClose, onConfirm, title, message, children, confirmText = 'Onayla', confirmColor = 'blue', loading = false }) {
   if (!isOpen) return null;
 
   const colorClasses = {
@@ -18,7 +18,8 @@ export default function Modal({ isOpen, onClose, onConfirm, title, message, conf
       {/* Modal Content */}
       <div className="relative bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
         <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
-        <p className="text-slate-400 text-sm mb-6">{message}</p>
+        {message && <p className="text-slate-400 text-sm mb-6">{message}</p>}
+        {children && <div className="mb-6">{children}</div>}
 
         <div className="flex justify-end gap-3">
           <button

@@ -14,6 +14,7 @@ export default function AdminPetitionDetailPage() {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState({ open: false, type: null });
   const [actionLoading, setActionLoading] = useState(false);
+  const [rejectReason, setRejectReason] = useState('');
 
   useEffect(() => {
     fetchPetition();
@@ -38,7 +39,7 @@ export default function AdminPetitionDetailPage() {
         await adminService.approve(id);
         toast.success('Dilekçe onaylandı!');
       } else {
-        await adminService.reject(id);
+        await adminService.reject(id, rejectReason);
         toast.success('Dilekçe reddedildi');
       }
       navigate('/admin/petitions/pending');
@@ -48,6 +49,7 @@ export default function AdminPetitionDetailPage() {
     } finally {
       setActionLoading(false);
       setModal({ open: false, type: null, customMessage: null });
+      setRejectReason('');
     }
   };
 
@@ -129,6 +131,20 @@ export default function AdminPetitionDetailPage() {
           <p className="text-slate-300 leading-relaxed">{petition.description}</p>
         </div>
 
+        {petition.status === 'REJECTED' && petition.rejectionReason && (
+          <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-red-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="text-red-400 text-sm font-medium">Reddedilme Sebebi</p>
+                <p className="text-red-300/80 text-sm mt-1">{petition.rejectionReason}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {petition.status === 'PENDING_ADMIN' && (
           <div className="flex gap-3 pt-4 border-t border-slate-800">
             <button
@@ -149,14 +165,30 @@ export default function AdminPetitionDetailPage() {
 
       <Modal
         isOpen={modal.open}
-        onClose={() => setModal({ open: false, type: null, customMessage: null })}
+        onClose={() => {
+          setModal({ open: false, type: null, customMessage: null });
+          setRejectReason('');
+        }}
         onConfirm={handleAction}
         title={modal.type === 'approve' ? 'Final Onay' : 'Dilekçeyi Reddet'}
         message={modal.customMessage || `"${petition.eventName}" dilekçesi ${modal.type === 'approve' ? 'onaylanacak' : 'reddedilecek'}. Emin misiniz?`}
         confirmText={modal.type === 'approve' ? 'Onayla' : 'Reddet'}
         confirmColor={modal.type === 'approve' ? 'green' : 'red'}
         loading={actionLoading}
-      />
+      >
+        {modal.type === 'reject' && (
+          <div className="mt-4">
+            <label className="block text-sm font-medium text-slate-300 mb-1.5">Ret Sebebi (Opsiyonel)</label>
+            <textarea
+              value={rejectReason}
+              onChange={(e) => setRejectReason(e.target.value)}
+              className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 hover:border-slate-600 focus:border-red-500 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition resize-none"
+              placeholder="Dilekçenin reddedilme sebebini yazınız..."
+              rows={3}
+            />
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

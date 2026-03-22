@@ -40,6 +40,9 @@ public class Petition {
     @Column(name = "file_path")
     private String filePath;
 
+    @Column(name = "rejection_reason", columnDefinition = "TEXT")
+    private String rejectionReason;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

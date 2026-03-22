@@ -99,6 +99,20 @@ export default function PetitionDetailPage() {
           <p className="text-slate-300 leading-relaxed">{petition.description}</p>
         </div>
 
+        {petition.status === 'REJECTED' && petition.rejectionReason && (
+          <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-red-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="text-red-400 text-sm font-medium">Reddedilme Sebebi</p>
+                <p className="text-red-300/80 text-sm mt-1">{petition.rejectionReason}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {petition.status === 'APPROVED' && petition.filePath && (
           <button
             onClick={handleDownload}

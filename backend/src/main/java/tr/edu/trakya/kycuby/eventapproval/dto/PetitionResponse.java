@@ -13,5 +13,6 @@ public record PetitionResponse(
         String filePath,
         LocalDateTime createdAt,
         String clubName,
-        String createdByUsername
+        String createdByUsername,
+        String rejectionReason
 ) {}

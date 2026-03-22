@@ -132,7 +132,7 @@ public class PetitionService {
      * Dilekçeyi reddeder (Danışman veya Admin).
      */
     @Transactional
-    public PetitionResponse reject(Long petitionId, String username) {
+    public PetitionResponse reject(Long petitionId, String username, String reason) {
         User user = userService.findByUsername(username);
         Petition petition = findPetitionById(petitionId);
 
@@ -150,9 +150,10 @@ public class PetitionService {
         }
 
         petition.setStatus(PetitionStatus.REJECTED);
+        petition.setRejectionReason(reason);
         Petition updated = petitionRepository.save(petition);
 
-        log.info("Dilekçe reddedildi: id={}, reddeden={}", petitionId, username);
+        log.info("Dilekçe reddedildi: id={}, reddeden={}, sebep={}", petitionId, username, reason);
         return petitionMapper.toResponse(updated);
     }
 

@@ -48,9 +48,10 @@ public class AdvisorController {
     @PutMapping("/petitions/{id}/reject")
     public ResponseEntity<PetitionResponse> rejectPetition(
             @PathVariable Long id,
+            @RequestParam(required = false) String reason,
             @AuthenticationPrincipal UserDetails userDetails) {
 
-        PetitionResponse response = petitionService.reject(id, userDetails.getUsername());
+        PetitionResponse response = petitionService.reject(id, userDetails.getUsername(), reason);
         return ResponseEntity.ok(response);
     }
 }

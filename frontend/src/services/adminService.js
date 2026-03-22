@@ -4,7 +4,7 @@ export const adminService = {
   getPendingPetitions: () => api.get('/admin/petitions'),
   getAllPetitions: () => api.get('/admin/petitions/all'),
   approve: (id) => api.put(`/admin/petitions/${id}/approve`),
-  reject: (id) => api.put(`/admin/petitions/${id}/reject`),
+  reject: (id, reason) => api.put(`/admin/petitions/${id}/reject`, null, { params: { reason } }),
 
   // Kulüp yönetimi
   getClubs: () => api.get('/admin/clubs'),
