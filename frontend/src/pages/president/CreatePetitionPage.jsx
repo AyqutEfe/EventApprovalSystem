@@ -67,65 +67,65 @@ export default function CreatePetitionPage() {
   return (
     <div className="max-w-2xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Yeni Dilekçe Oluştur</h1>
-        <p className="text-slate-400 mt-1">Etkinlik bilgilerini girerek yeni bir dilekçe oluşturun</p>
+        <h1 className="text-2xl font-bold text-ink">Yeni Dilekçe Oluştur</h1>
+        <p className="text-slate-600 mt-1">Etkinlik bilgilerini girerek yeni bir dilekçe oluşturun</p>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
+      <div className="paper-card p-8">
         <form onSubmit={handleSubmit(checkConflictsAndSubmit)} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">Etkinlik Adı</label>
+            <label className="block text-sm font-bold text-ink mb-1.5">Etkinlik Adı</label>
             <input
               {...register('eventName')}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition shadow-sm"
               placeholder="Örn: Bilgisayar Mühendisliği Semineri"
             />
-            {errors.eventName && <p className="text-red-400 text-xs mt-1">{errors.eventName.message}</p>}
+            {errors.eventName && <p className="text-rose-600 font-medium text-xs mt-1">{errors.eventName.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">Etkinlik Tarihi</label>
+            <label className="block text-sm font-bold text-ink mb-1.5">Etkinlik Tarihi</label>
             <input
               type="date"
               {...register('eventDate')}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition shadow-sm"
             />
-            {errors.eventDate && <p className="text-red-400 text-xs mt-1">{errors.eventDate.message}</p>}
+            {errors.eventDate && <p className="text-rose-600 font-medium text-xs mt-1">{errors.eventDate.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">Lokasyon</label>
+            <label className="block text-sm font-bold text-ink mb-1.5">Lokasyon</label>
             <input
               {...register('location')}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition shadow-sm"
               placeholder="Örn: Balkan Yerleşkesi Amfi"
             />
-            {errors.location && <p className="text-red-400 text-xs mt-1">{errors.location.message}</p>}
+            {errors.location && <p className="text-rose-600 font-medium text-xs mt-1">{errors.location.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">Açıklama</label>
+            <label className="block text-sm font-bold text-ink mb-1.5">Açıklama</label>
             <textarea
               {...register('description')}
               rows={4}
-              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+              className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition resize-none shadow-sm"
               placeholder="Etkinlik hakkında detaylı açıklama..."
             />
-            {errors.description && <p className="text-red-400 text-xs mt-1">{errors.description.message}</p>}
+            {errors.description && <p className="text-rose-600 font-medium text-xs mt-1">{errors.description.message}</p>}
           </div>
 
           <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={() => navigate('/petitions/my')}
-              className="px-6 py-3 text-sm font-medium text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition cursor-pointer"
+              className="px-6 py-3 text-sm font-bold text-slate-600 hover:text-ink hover:bg-paper-bg bg-paper-input border border-slate-300 shadow-sm rounded-xl transition cursor-pointer"
             >
               İptal
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition disabled:opacity-50 cursor-pointer shadow-lg shadow-blue-600/30"
+              className="flex-1 py-3 bg-ink hover:bg-slate-800 text-white font-semibold rounded-xl transition disabled:opacity-50 cursor-pointer shadow-sm"
             >
               {loading ? 'İşleniyor...' : 'Dilekçe Oluştur'}
             </button>

@@ -38,43 +38,43 @@ export default function AdvisorPetitionsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Gelen Dilekçeler</h1>
-        <p className="text-slate-400 mt-1">Kulübünüze ait dilekçeleri inceleyin ve onaylayın</p>
+        <h1 className="text-2xl font-bold text-ink">Gelen Dilekçeler</h1>
+        <p className="text-slate-600 mt-1">Kulübünüze ait dilekçeleri inceleyin ve onaylayın</p>
       </div>
 
       {petitions.length === 0 ? (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center">
-          <svg className="w-16 h-16 text-slate-700 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="paper-card border-slate-300 rounded-2xl p-12 text-center shadow-md">
+          <svg className="w-16 h-16 text-slate-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-2.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
           </svg>
-          <h3 className="text-white font-medium mb-1">Dilekçe bulunmuyor</h3>
-          <p className="text-slate-500 text-sm">Kulübünüze ait bekleyen dilekçe yok.</p>
+          <h3 className="text-ink font-bold mb-1">Dilekçe bulunmuyor</h3>
+          <p className="text-slate-600 text-sm">Kulübünüze ait bekleyen dilekçe yok.</p>
         </div>
       ) : (
         <div className="space-y-6">
           {pendingPetitions.length > 0 && (
             <div>
-              <h2 className="text-sm font-medium text-amber-400 uppercase tracking-wider mb-3">Onay Bekleyenler ({pendingPetitions.length})</h2>
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+              <h2 className="text-sm font-bold text-amber-700 uppercase tracking-wider mb-3">Onay Bekleyenler ({pendingPetitions.length})</h2>
+              <div className="paper-card border-slate-300 rounded-2xl overflow-hidden shadow-md">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-slate-800">
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Etkinlik</th>
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Tarih</th>
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Başkan</th>
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Durum</th>
-                      <th className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">İşlem</th>
+                    <tr className="border-b border-slate-300">
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Etkinlik</th>
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Tarih</th>
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Başkan</th>
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Durum</th>
+                      <th className="text-right text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">İşlem</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800">
+                  <tbody className="divide-y divide-slate-200">
                     {pendingPetitions.map((p) => (
-                      <tr key={p.id} className="hover:bg-slate-800/50 transition">
-                        <td className="px-6 py-4 text-white font-medium">{p.eventName}</td>
-                        <td className="px-6 py-4 text-slate-400 text-sm">{format(new Date(p.eventDate), 'dd.MM.yyyy')}</td>
-                        <td className="px-6 py-4 text-slate-400 text-sm">{p.createdByUsername}</td>
+                      <tr key={p.id} className="hover:bg-paper-input transition">
+                        <td className="px-6 py-4 text-ink font-medium">{p.eventName}</td>
+                        <td className="px-6 py-4 text-slate-700 text-sm">{format(new Date(p.eventDate), 'dd.MM.yyyy')}</td>
+                        <td className="px-6 py-4 text-slate-700 text-sm">{p.createdByUsername}</td>
                         <td className="px-6 py-4"><StatusBadge status={p.status} /></td>
                         <td className="px-6 py-4 text-right">
-                          <Link to={`/advisor/petitions/${p.id}`} className="text-blue-400 hover:text-blue-300 text-sm font-medium transition">
+                          <Link to={`/advisor/petitions/${p.id}`} className="text-ink hover:text-slate-600 underline text-sm font-bold transition">
                             İncele →
                           </Link>
                         </td>
@@ -88,21 +88,21 @@ export default function AdvisorPetitionsPage() {
 
           {otherPetitions.length > 0 && (
             <div>
-              <h2 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-3">Diğer ({otherPetitions.length})</h2>
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+              <h2 className="text-sm font-bold text-slate-600 uppercase tracking-wider mb-3">Diğer ({otherPetitions.length})</h2>
+              <div className="paper-card border-slate-300 rounded-2xl overflow-hidden shadow-md">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-slate-800">
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Etkinlik</th>
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Tarih</th>
-                      <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Durum</th>
+                    <tr className="border-b border-slate-300">
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Etkinlik</th>
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Tarih</th>
+                      <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Durum</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800">
+                  <tbody className="divide-y divide-slate-200">
                     {otherPetitions.map((p) => (
-                      <tr key={p.id} className="hover:bg-slate-800/50 transition">
-                        <td className="px-6 py-4 text-white font-medium">{p.eventName}</td>
-                        <td className="px-6 py-4 text-slate-400 text-sm">{format(new Date(p.eventDate), 'dd.MM.yyyy')}</td>
+                      <tr key={p.id} className="hover:bg-paper-input transition">
+                        <td className="px-6 py-4 text-ink font-medium">{p.eventName}</td>
+                        <td className="px-6 py-4 text-slate-700 text-sm">{format(new Date(p.eventDate), 'dd.MM.yyyy')}</td>
                         <td className="px-6 py-4"><StatusBadge status={p.status} /></td>
                       </tr>
                     ))}

@@ -89,7 +89,7 @@ export default function AdvisorPetitionDetailPage() {
     <div className="max-w-3xl">
       <button
         onClick={() => navigate('/advisor/petitions')}
-        className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-6 transition cursor-pointer"
+        className="inline-flex items-center gap-2 text-slate-600 hover:text-ink text-sm mb-6 transition cursor-pointer font-bold"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -97,29 +97,29 @@ export default function AdvisorPetitionDetailPage() {
         Geri
       </button>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
+      <div className="paper-card border-slate-300 rounded-2xl p-8 shadow-md">
         <div className="flex items-start justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-white">{petition.eventName}</h1>
-            <p className="text-slate-500 text-sm mt-1">Kulüp: {petition.clubName} • Başkan: {petition.createdByUsername}</p>
+            <h1 className="text-2xl font-bold text-ink">{petition.eventName}</h1>
+            <p className="text-slate-600 text-sm mt-1">Kulüp: {petition.clubName} • Başkan: {petition.createdByUsername}</p>
           </div>
           <StatusBadge status={petition.status} />
         </div>
 
         <div className="grid grid-cols-2 gap-6 mb-6">
-          <div className="bg-slate-800/50 rounded-xl p-4">
-            <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Etkinlik Tarihi</p>
-            <p className="text-white font-medium">{format(new Date(petition.eventDate), 'dd.MM.yyyy')}</p>
+          <div className="bg-paper-input border border-slate-300 rounded-xl p-4">
+            <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Etkinlik Tarihi</p>
+            <p className="text-ink font-medium">{format(new Date(petition.eventDate), 'dd.MM.yyyy')}</p>
           </div>
-          <div className="bg-slate-800/50 rounded-xl p-4">
-            <p className="text-slate-500 text-xs uppercase tracking-wider mb-1">Lokasyon</p>
-            <p className="text-white font-medium">{petition.location}</p>
+          <div className="bg-paper-input border border-slate-300 rounded-xl p-4">
+            <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Lokasyon</p>
+            <p className="text-ink font-medium">{petition.location}</p>
           </div>
         </div>
 
         <div className="mb-8">
-          <p className="text-slate-500 text-xs uppercase tracking-wider mb-2">Açıklama</p>
-          <p className="text-slate-300 leading-relaxed">{petition.description}</p>
+          <p className="text-slate-600 font-bold text-xs uppercase tracking-wider mb-2">Açıklama</p>
+          <p className="text-ink leading-relaxed">{petition.description}</p>
         </div>
 
         {petition.status === 'REJECTED' && petition.rejectionReason && (
@@ -137,16 +137,16 @@ export default function AdvisorPetitionDetailPage() {
         )}
 
         {petition.status === 'PENDING_ADVISOR' && (
-          <div className="flex gap-3 pt-4 border-t border-slate-800">
+          <div className="flex gap-3 pt-4 border-t border-slate-300">
             <button
               onClick={() => setModal({ open: true, type: 'reject' })}
-              className="px-6 py-3 text-sm font-medium text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl transition cursor-pointer"
+              className="px-6 py-3 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 border border-red-300 rounded-xl transition cursor-pointer"
             >
               Reddet
             </button>
             <button
               onClick={handleApproveClick}
-              className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition cursor-pointer shadow-lg shadow-emerald-600/30"
+              className="flex-1 py-3 bg-ink hover:bg-slate-800 text-white font-semibold rounded-xl transition cursor-pointer shadow-lg"
             >
               Onayla
             </button>
@@ -169,11 +169,11 @@ export default function AdvisorPetitionDetailPage() {
       >
         {modal.type === 'reject' && (
           <div className="mt-4">
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">Ret Sebebi (Opsiyonel)</label>
+            <label className="block text-sm font-bold text-ink mb-1.5">Ret Sebebi (Opsiyonel)</label>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 hover:border-slate-600 focus:border-red-500 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition resize-none"
+              className="w-full px-4 py-3 bg-paper-input border border-slate-300 hover:border-slate-400 focus:border-red-500 rounded-xl text-ink placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500/20 transition resize-none"
               placeholder="Dilekçenin reddedilme sebebini yazınız..."
               rows={3}
             />

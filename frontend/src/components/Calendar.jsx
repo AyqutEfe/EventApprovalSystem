@@ -18,9 +18,9 @@ import StatusBadge from "./StatusBadge";
 const WEEKDAYS = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
 const statusColors = {
-    PENDING_ADVISOR: "bg-amber-500/80",
-    PENDING_ADMIN: "bg-blue-500/80",
-    APPROVED: "bg-emerald-500/80",
+    PENDING_ADVISOR: "bg-amber-200 text-ink",
+    PENDING_ADMIN: "bg-yellow-200 text-ink",
+    APPROVED: "bg-emerald-200 text-ink",
 };
 
 export default function Calendar({ petitions = [] }) {
@@ -63,7 +63,7 @@ export default function Calendar({ petitions = [] }) {
         <div>
             {/* Takvim Header */}
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-ink">
                     {format(currentMonth, "MMMM yyyy", { locale: tr })}
                 </h2>
                 <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export default function Calendar({ petitions = [] }) {
                         onClick={() =>
                             setCurrentMonth(subMonths(currentMonth, 1))
                         }
-                        className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition cursor-pointer"
+                        className="p-2 rounded-lg bg-paper-input border border-slate-300 shadow-sm hover:bg-paper-bg text-slate-700 hover:text-ink transition cursor-pointer"
                     >
                         <svg
                             className="w-5 h-5"
@@ -89,7 +89,7 @@ export default function Calendar({ petitions = [] }) {
                     </button>
                     <button
                         onClick={() => setCurrentMonth(new Date())}
-                        className="px-3 py-1.5 text-sm font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition cursor-pointer"
+                        className="px-3 py-1.5 text-sm font-bold rounded-lg bg-paper-input border border-slate-300 shadow-sm hover:bg-paper-bg text-slate-700 hover:text-ink transition cursor-pointer"
                     >
                         Bugün
                     </button>
@@ -97,7 +97,7 @@ export default function Calendar({ petitions = [] }) {
                         onClick={() =>
                             setCurrentMonth(addMonths(currentMonth, 1))
                         }
-                        className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition cursor-pointer"
+                        className="p-2 rounded-lg bg-paper-input border border-slate-300 shadow-sm hover:bg-paper-bg text-slate-700 hover:text-ink transition cursor-pointer"
                     >
                         <svg
                             className="w-5 h-5"
@@ -136,9 +136,10 @@ export default function Calendar({ petitions = [] }) {
                 </div>
             </div>
 
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+            <div className="paper-card crumpled pinned pt-10 pb-4 px-4 rotate-[0.5deg] overflow-hidden">
+                <div className="pin"></div>
                 {/* Weekday Headers */}
-                <div className="grid grid-cols-7 border-b border-slate-800">
+                <div className="grid grid-cols-7 border-b border-slate-300 relative z-10">
                     {WEEKDAYS.map((d) => (
                         <div
                             key={d}
@@ -169,25 +170,24 @@ export default function Calendar({ petitions = [] }) {
                                             : day,
                                     )
                                 }
-                                className={`min-h-[100px] p-2 border-b border-r border-slate-800/50 cursor-pointer transition-colors
+                                className={`min-h-[100px] p-2 border-b border-r border-slate-300 cursor-pointer transition-colors
                   ${inMonth ? "" : "opacity-30"}
-                  ${isSelected ? "bg-blue-600/10 ring-1 ring-inset ring-blue-500/30" : "hover:bg-slate-800/50"}
+                  ${isSelected ? "bg-yellow-500/20 ring-1 ring-inset ring-amber-600" : "hover:bg-paper-input"}
                 `}
                             >
                                 <div
                                     className={`text-sm font-medium mb-1 w-7 h-7 flex items-center justify-center rounded-full
-                  ${today ? "bg-blue-600 text-white" : "text-slate-400"}
+                  ${today ? "bg-ink text-white" : "text-ink"}
                 `}
                                 >
                                     {format(day, "d")}
                                 </div>
 
-                                {/* Etkinlik noktaları */}
                                 <div className="space-y-1">
                                     {dayEvents.slice(0, 3).map((ev, j) => (
                                         <div
                                             key={j}
-                                            className={`text-[10px] font-medium text-white px-1.5 py-0.5 rounded truncate ${statusColors[ev.status] || "bg-slate-600"}`}
+                                            className={`text-[10px] font-medium px-1.5 py-0.5 rounded truncate ${statusColors[ev.status] || "bg-slate-200 text-ink"}`}
                                             title={`${ev.eventName} — ${ev.clubName}`}
                                         >
                                             {ev.eventName}
@@ -207,27 +207,29 @@ export default function Calendar({ petitions = [] }) {
 
             {/* Seçili Gün Detayı */}
             {selectedDate && (
-                <div className="mt-6 bg-slate-900 border border-slate-800 rounded-2xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">
+                <div className="mt-6 paper-card crumpled pinned pt-10 pb-6 px-6 -rotate-[0.5deg]">
+                    <div className="pin"></div>
+                    <h3 className="text-lg font-bold text-ink mb-4 relative z-10">
                         {format(selectedDate, "d MMMM yyyy, EEEE", {
                             locale: tr,
                         })}
                     </h3>
 
-                    {selectedEvents.length === 0 ? (
-                        <p className="text-slate-500 text-sm">
-                            Bu tarihte planlanmış etkinlik bulunmuyor.
-                        </p>
-                    ) : (
-                        <div className="space-y-3">
+                    <div className="relative z-10">
+                        {selectedEvents.length === 0 ? (
+                            <p className="text-slate-600 text-sm">
+                                Bu tarihte planlanmış etkinlik bulunmuyor.
+                            </p>
+                        ) : (
+                            <div className="space-y-3">
                             {selectedEvents.map((ev) => (
                                 <div
                                     key={ev.id}
-                                    className="flex items-center justify-between bg-slate-800/50 rounded-xl p-4"
+                                    className="flex items-center justify-between bg-paper-input border border-slate-300 shadow-sm rounded-xl p-4"
                                 >
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-3 mb-1">
-                                            <h4 className="text-white font-medium truncate">
+                                            <h4 className="text-ink font-bold truncate">
                                                 {ev.eventName}
                                             </h4>
                                             <StatusBadge status={ev.status} />
@@ -291,8 +293,9 @@ export default function Calendar({ petitions = [] }) {
                                     </div>
                                 </div>
                             ))}
-                        </div>
-                    )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

@@ -140,13 +140,13 @@ export default function Layout({ children }) {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 flex">
+        <div className="min-h-screen text-ink flex">
             {/* Sidebar */}
-            <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed h-full">
+            <aside className="w-64 bg-paper-bg border-r border-slate-300 shadow-sm flex flex-col fixed h-full z-10">
                 {/* Logo */}
-                <div className="p-6 border-b border-slate-800">
+                <div className="p-6 border-b border-slate-300">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-ink flex items-center justify-center shadow-md rotate-[2deg]">
                             <svg
                                 className="w-5 h-5 text-white"
                                 fill="none"
@@ -162,10 +162,10 @@ export default function Layout({ children }) {
                             </svg>
                         </div>
                         <div>
-                            <h1 className="text-white font-bold text-sm">
+                            <h1 className="text-ink font-bold text-sm">
                                 KYCUBYO
                             </h1>
-                            <p className="text-slate-400 text-xs">
+                            <p className="text-slate-500 text-xs">
                                 Etkinlik Onay
                             </p>
                         </div>
@@ -179,10 +179,10 @@ export default function Layout({ children }) {
                             key={item.to}
                             to={item.to}
                             className={({ isActive }) =>
-                                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all duration-200 ${
                                     isActive
-                                        ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                                        : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                                        ? "bg-paper-input text-ink border border-slate-300 shadow-sm"
+                                        : "text-slate-600 hover:bg-black/5 hover:text-ink border border-transparent"
                                 }`
                             }
                         >
@@ -193,23 +193,23 @@ export default function Layout({ children }) {
                 </nav>
 
                 {/* User Info & Logout */}
-                <div className="p-4 border-t border-slate-800">
+                <div className="p-4 border-t border-slate-300">
                     <div className="flex items-center gap-3 mb-3 px-2">
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">
+                        <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-ink text-sm font-bold shadow-sm border border-slate-300">
                             {user?.username?.[0]?.toUpperCase() || "?"}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-white text-sm font-medium truncate">
+                            <p className="text-ink text-sm font-bold truncate">
                                 {user?.username}
                             </p>
-                            <p className="text-slate-500 text-xs">
+                            <p className="text-slate-500 text-xs font-medium">
                                 {roleLabels[user?.role] || user?.role}
                             </p>
                         </div>
                     </div>
                     <button
                         onClick={handleLogout}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition cursor-pointer"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition border border-transparent hover:border-rose-200 cursor-pointer"
                     >
                         <svg
                             className="w-4 h-4"

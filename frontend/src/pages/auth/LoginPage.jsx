@@ -32,11 +32,11 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center px-4">
+        <div className="min-h-screen bg-paper-desk flex items-center justify-center px-4">
             <div className="w-full max-w-md">
                 {/* Logo / Başlık */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 mb-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-ink mb-4 shadow-sm border border-slate-300">
                         <svg
                             className="w-8 h-8 text-white"
                             fill="none"
@@ -51,19 +51,19 @@ export default function LoginPage() {
                             />
                         </svg>
                     </div>
-                    <h1 className="text-2xl font-bold text-white">
+                    <h1 className="text-2xl font-bold text-ink">
                         KYCUBYO Etkinlik Onay
                     </h1>
-                    <p className="text-blue-300 mt-1">Hesabınıza giriş yapın</p>
+                    <p className="text-slate-600 mt-1">Hesabınıza giriş yapın</p>
                 </div>
 
                 {/* Form Kartı */}
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/10 shadow-2xl">
+                <div className="paper-card p-8">
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
                             <label
                                 htmlFor="username"
-                                className="block text-sm font-medium text-blue-200 mb-1.5"
+                                className="block text-sm font-bold text-ink mb-1.5"
                             >
                                 Kullanıcı Adı
                             </label>
@@ -73,7 +73,7 @@ export default function LoginPage() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition shadow-sm"
                                 placeholder="Kullanıcı adınız"
                             />
                         </div>
@@ -81,7 +81,7 @@ export default function LoginPage() {
                         <div>
                             <label
                                 htmlFor="password"
-                                className="block text-sm font-medium text-blue-200 mb-1.5"
+                                className="block text-sm font-bold text-ink mb-1.5"
                             >
                                 Şifre
                             </label>
@@ -91,7 +91,7 @@ export default function LoginPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent transition shadow-sm"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg shadow-blue-600/30"
+                            className="w-full py-3 bg-ink hover:bg-slate-800 text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
                         >
                             {loading ? (
                                 <span className="inline-flex items-center gap-2">
@@ -130,11 +130,11 @@ export default function LoginPage() {
                         </button>
                     </form>
 
-                    <p className="text-center text-blue-300/70 text-sm mt-6">
+                    <p className="text-center text-slate-600 text-sm mt-6">
                         Hesabınız yok mu?{" "}
                         <Link
                             to="/register"
-                            className="text-blue-400 hover:text-blue-300 font-medium transition"
+                            className="text-ink font-bold hover:underline transition"
                         >
                             Kayıt Ol
                         </Link>

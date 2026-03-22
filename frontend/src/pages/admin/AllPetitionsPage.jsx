@@ -49,10 +49,10 @@ export default function AllPetitionsPage() {
     return (
         <div>
             <div className="mb-8">
-                <h1 className="text-2xl font-bold text-white">
+                <h1 className="text-2xl font-bold text-ink">
                     Tüm Dilekçeler
                 </h1>
-                <p className="text-slate-400 mt-1">
+                <p className="text-slate-600 mt-1">
                     Sistemdeki tüm dilekçelerin arşivi
                 </p>
             </div>
@@ -63,10 +63,10 @@ export default function AllPetitionsPage() {
                     <button
                         key={f.key}
                         onClick={() => setFilter(f.key)}
-                        className={`px-4 py-2 text-sm font-medium rounded-xl transition whitespace-nowrap cursor-pointer ${
+                        className={`px-4 py-2 text-sm font-bold rounded-xl border transition whitespace-nowrap cursor-pointer ${
                             filter === f.key
-                                ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-                                : "bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700"
+                                ? "bg-ink text-white border-ink shadow-md"
+                                : "bg-paper-input border-slate-300 text-slate-600 hover:text-ink hover:bg-paper-bg"
                         }`}
                     >
                         {f.label}
@@ -78,58 +78,58 @@ export default function AllPetitionsPage() {
             </div>
 
             {filtered.length === 0 ? (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center">
-                    <h3 className="text-white font-medium mb-1">
+                <div className="paper-card border-slate-300 shadow-md rounded-2xl p-12 text-center">
+                    <h3 className="text-ink font-bold mb-1">
                         Sonuç bulunamadı
                     </h3>
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-slate-600 text-sm">
                         Bu filtreyle eşleşen dilekçe yok.
                     </p>
                 </div>
             ) : (
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+                <div className="paper-card border-slate-300 shadow-md rounded-2xl overflow-hidden">
                     <table className="w-full">
                         <thead>
-                            <tr className="border-b border-slate-800">
-                                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">
+                            <tr className="border-b border-slate-300">
+                                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     Etkinlik
                                 </th>
-                                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">
+                                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     Tarih
                                 </th>
-                                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">
+                                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     Kulüp
                                 </th>
-                                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">
+                                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     Başkan
                                 </th>
-                                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">
+                                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     Durum
                                 </th>
-                                <th className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">
+                                <th className="text-right text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     İşlem
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800">
+                        <tbody className="divide-y divide-slate-200">
                             {filtered.map((p) => (
                                 <tr
                                     key={p.id}
-                                    className="hover:bg-slate-800/50 transition"
+                                    className="hover:bg-paper-input transition"
                                 >
-                                    <td className="px-6 py-4 text-white font-medium">
+                                    <td className="px-6 py-4 text-ink font-medium">
                                         {p.eventName}
                                     </td>
-                                    <td className="px-6 py-4 text-slate-400 text-sm">
+                                    <td className="px-6 py-4 text-slate-700 text-sm">
                                         {format(
                                             new Date(p.eventDate),
                                             "dd.MM.yyyy",
                                         )}
                                     </td>
-                                    <td className="px-6 py-4 text-slate-400 text-sm">
+                                    <td className="px-6 py-4 text-slate-700 text-sm">
                                         {p.clubName}
                                     </td>
-                                    <td className="px-6 py-4 text-slate-400 text-sm">
+                                    <td className="px-6 py-4 text-slate-700 text-sm">
                                         {p.createdByUsername}
                                     </td>
                                     <td className="px-6 py-4">
@@ -138,7 +138,7 @@ export default function AllPetitionsPage() {
                                     <td className="px-6 py-4 text-right">
                                         <Link
                                             to={`/admin/petitions/${p.id}`}
-                                            className="text-blue-400 hover:text-blue-300 text-sm font-medium transition"
+                                            className="text-ink hover:text-slate-600 text-sm font-bold underline transition"
                                         >
                                             Detay →
                                         </Link>

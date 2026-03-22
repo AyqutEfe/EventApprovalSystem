@@ -1,1 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --color-paper-bg: #eaddb6;
+  --color-paper-input: #f2eacc;
+  --color-paper-desk: #c7a477;
+  --color-ink: #1e293b;
+  --color-highlight-green: #dcfce7;
+  --color-highlight-red: #ffe4e6;
+  --color-highlight-yellow: #fef08a;
+  
+  --font-handwriting: 'Kalam', cursive;
+}
+
+body {
+  background-color: var(--color-paper-desk);
+  color: var(--color-ink);
+  font-family: var(--font-handwriting);
+  /* Optional: a subtle pattern or texture could go here */
+  background-image: radial-gradient(var(--color-ink) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+}
+
+/* Base style for paper cards */
+.paper-card {
+  background-color: var(--color-paper-bg);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  border: 1px solid #d4c4a8;
+  border-radius: 0.15rem;
+}
+
+/* Pushpin effect */
+.pinned {
+  position: relative;
+}
+
+.pin {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 30% 30%, #fca5a5, #b91c1c); /* Red pin */
+  border-radius: 50%;
+  box-shadow: 
+    inset -2px -2px 4px rgba(0,0,0,0.3),
+    1px 4px 6px rgba(0,0,0,0.5); /* Strong drop shadow for depth */
+  z-index: 20;
+}
+
+.pin::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 6px;
+  background: linear-gradient(to bottom, #94a3b8, #334155);
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  z-index: -1;
+}
+
+/* Subtle crumpled/creased paper effect */
+.crumpled {
+  position: relative;
+  overflow: hidden;
+}
+
+.crumpled::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  background: 
+    linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 45%, rgba(0,0,0,0.04) 50%, transparent 55%),
+    linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 45%, rgba(0,0,0,0.02) 50%, transparent 55%);
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+/* Realistic highlighter marker effect */
+.highlight-marker {
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  color: var(--color-ink);
+  z-index: 1;
+  padding: 0 0.25rem;
+}
+
+.highlight-marker::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 10%;
+  height: 60%;
+  z-index: -1;
+  border-radius: 3px;
+  transform: rotate(-1deg);
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+}
+
+.highlight-green::before {
+  background-color: var(--color-highlight-green);
+  transform: rotate(1deg);
+}
+
+.highlight-red::before {
+  background-color: var(--color-highlight-red);
+}
+
+.highlight-yellow::before {
+  background-color: var(--color-highlight-yellow);
+  transform: rotate(-0.5deg);
+}

@@ -69,12 +69,12 @@ export default function ClubManagementPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Kulüp Yönetimi</h1>
-          <p className="text-slate-400 mt-1">Kulüpleri oluşturun ve yönetin</p>
+          <h1 className="text-2xl font-bold text-ink">Kulüp Yönetimi</h1>
+          <p className="text-slate-600 mt-1">Kulüpleri oluşturun ve yönetin</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-xl transition shadow-lg shadow-blue-600/30 cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition shadow-md cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -85,64 +85,64 @@ export default function ClubManagementPage() {
 
       {/* Kulüp Oluşturma Formu */}
       {showForm && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Yeni Kulüp Oluştur</h2>
+        <div className="paper-card border-slate-300 shadow-md rounded-2xl p-6 mb-6">
+          <h2 className="text-lg font-bold text-ink mb-4">Yeni Kulüp Oluştur</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Kulüp Adı</label>
+              <label className="block text-sm font-bold text-ink mb-1.5">Kulüp Adı</label>
               <input
                 value={form.name}
                 onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition"
                 placeholder="Örn: Bilişim Kulübü"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Danışman</label>
+                <label className="block text-sm font-bold text-ink mb-1.5">Danışman</label>
                 <select
                   value={form.advisorId}
                   onChange={(e) => setForm(prev => ({ ...prev, advisorId: e.target.value }))}
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition appearance-none cursor-pointer"
                 >
-                  <option value="" className="bg-slate-800">Danışman seçin</option>
+                  <option value="" className="bg-paper-input text-slate-500">Danışman seçin</option>
                   {advisors.map(u => (
-                    <option key={u.id} value={u.id} className="bg-slate-800">
+                    <option key={u.id} value={u.id} className="bg-paper-input">
                       {u.username} ({u.email})
                     </option>
                   ))}
                 </select>
-                {advisors.length === 0 && <p className="text-amber-400 text-xs mt-1">Henüz ADVISOR rolünde kullanıcı yok</p>}
+                {advisors.length === 0 && <p className="text-red-600 font-bold text-xs mt-1">Henüz ADVISOR rolünde kullanıcı yok</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Başkan</label>
+                <label className="block text-sm font-bold text-ink mb-1.5">Başkan</label>
                 <select
                   value={form.presidentId}
                   onChange={(e) => setForm(prev => ({ ...prev, presidentId: e.target.value }))}
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition appearance-none cursor-pointer"
                 >
-                  <option value="" className="bg-slate-800">Başkan seçin</option>
+                  <option value="" className="bg-paper-input text-slate-500">Başkan seçin</option>
                   {presidents.map(u => (
-                    <option key={u.id} value={u.id} className="bg-slate-800">
+                    <option key={u.id} value={u.id} className="bg-paper-input">
                       {u.username} ({u.email})
                     </option>
                   ))}
                 </select>
-                {presidents.length === 0 && <p className="text-amber-400 text-xs mt-1">Henüz PRESIDENT rolünde kullanıcı yok</p>}
+                {presidents.length === 0 && <p className="text-red-600 font-bold text-xs mt-1">Henüz PRESIDENT rolünde kullanıcı yok</p>}
               </div>
             </div>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="px-4 py-2.5 text-sm font-medium text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition cursor-pointer"
+                className="px-4 py-2.5 text-sm font-bold text-slate-600 hover:text-ink bg-paper-input hover:bg-paper-bg border border-slate-300 rounded-xl transition cursor-pointer"
               >
                 İptal
               </button>
               <button
                 type="submit"
                 disabled={formLoading}
-                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-xl transition disabled:opacity-50 cursor-pointer shadow-lg shadow-blue-600/30"
+                className="px-6 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition disabled:opacity-50 cursor-pointer shadow-md"
               >
                 {formLoading ? 'Oluşturuluyor...' : 'Kulüp Oluştur'}
               </button>
@@ -153,29 +153,29 @@ export default function ClubManagementPage() {
 
       {/* Kulüp Listesi */}
       {clubs.length === 0 ? (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center">
-          <svg className="w-16 h-16 text-slate-700 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="paper-card border-slate-300 shadow-md rounded-2xl p-12 text-center">
+          <svg className="w-16 h-16 text-slate-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
           </svg>
-          <h3 className="text-white font-medium mb-1">Henüz kulüp yok</h3>
-          <p className="text-slate-500 text-sm">İlk kulübü oluşturmak için yukarıdaki butona tıklayın.</p>
+          <h3 className="text-ink font-bold mb-1">Henüz kulüp yok</h3>
+          <p className="text-slate-600 text-sm">İlk kulübü oluşturmak için yukarıdaki butona tıklayın.</p>
         </div>
       ) : (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="paper-card border-slate-300 shadow-md rounded-2xl overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-800">
-                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Kulüp Adı</th>
-                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Danışman</th>
-                <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-6 py-4">Başkan</th>
+              <tr className="border-b border-slate-300">
+                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Kulüp Adı</th>
+                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Danışman</th>
+                <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Başkan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="divide-y divide-slate-200">
               {clubs.map((club) => (
-                <tr key={club.id} className="hover:bg-slate-800/50 transition">
-                  <td className="px-6 py-4 text-white font-medium">{club.name}</td>
-                  <td className="px-6 py-4 text-slate-400 text-sm">{club.advisorUsername}</td>
-                  <td className="px-6 py-4 text-slate-400 text-sm">{club.presidentUsername}</td>
+                <tr key={club.id} className="hover:bg-paper-input transition">
+                  <td className="px-6 py-4 text-ink font-medium">{club.name}</td>
+                  <td className="px-6 py-4 text-slate-700 text-sm">{club.advisorUsername}</td>
+                  <td className="px-6 py-4 text-slate-700 text-sm">{club.presidentUsername}</td>
                 </tr>
               ))}
             </tbody>

@@ -35,24 +35,24 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-paper-desk flex items-center justify-center px-4 font-kalam">
+      <div className="w-full max-w-md relative z-10">
         {/* Logo / Başlık */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-ink mb-4 shadow-md rotate-[2deg]">
             <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-white">Kayıt Ol</h1>
-          <p className="text-blue-300 mt-1">Yeni hesap oluşturun</p>
+          <h1 className="text-3xl font-bold text-ink">Kayıt Ol</h1>
+          <p className="text-slate-600 mt-1 font-bold text-lg">Yeni hesap oluşturun</p>
         </div>
 
         {/* Form Kartı */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/10 shadow-2xl">
+        <div className="paper-card rounded-2xl p-8 border-slate-300 shadow-xl -rotate-[1deg]">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-blue-200 mb-1.5">
+              <label htmlFor="username" className="block text-lg font-bold text-ink mb-1.5">
                 Kullanıcı Adı
               </label>
               <input
@@ -64,13 +64,13 @@ export default function RegisterPage() {
                 required
                 minLength={3}
                 maxLength={50}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition"
                 placeholder="En az 3 karakter"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-blue-200 mb-1.5">
+              <label htmlFor="email" className="block text-lg font-bold text-ink mb-1.5">
                 E-posta
               </label>
               <input
@@ -80,13 +80,13 @@ export default function RegisterPage() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition"
                 placeholder="ornek@trakya.edu.tr"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-blue-200 mb-1.5">
+              <label htmlFor="password" className="block text-lg font-bold text-ink mb-1.5">
                 Şifre
               </label>
               <input
@@ -97,13 +97,13 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 required
                 minLength={6}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition"
                 placeholder="En az 6 karakter"
               />
             </div>
 
             <div>
-              <label htmlFor="role" className="block text-sm font-medium text-blue-200 mb-1.5">
+              <label htmlFor="role" className="block text-lg font-bold text-ink mb-1.5">
                 Rol
               </label>
               <select
@@ -111,10 +111,10 @@ export default function RegisterPage() {
                 name="role"
                 value={form.role}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer"
+                className="w-full px-4 py-3 bg-paper-input border border-slate-300 rounded-xl text-ink font-bold focus:outline-none focus:ring-2 focus:ring-ink/20 focus:border-slate-400 transition appearance-none cursor-pointer"
               >
                 {ROLES.map((r) => (
-                  <option key={r.value} value={r.value} className="bg-slate-800 text-white">
+                  <option key={r.value} value={r.value} className="bg-paper-input text-ink">
                     {r.label}
                   </option>
                 ))}
@@ -124,7 +124,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg shadow-blue-600/30"
+              className="w-full py-3 mt-4 bg-ink hover:bg-slate-800 text-white font-bold text-lg rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-md rotate-[0.5deg]"
             >
               {loading ? (
                 <span className="inline-flex items-center gap-2">
@@ -138,9 +138,9 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <p className="text-center text-blue-300/70 text-sm mt-6">
+          <p className="text-center text-slate-600 text-sm mt-6 font-bold">
             Zaten hesabınız var mı?{' '}
-            <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition">
+            <Link to="/login" className="text-ink hover:text-slate-600 underline transition">
               Giriş Yap
             </Link>
           </p>

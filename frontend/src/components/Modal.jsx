@@ -2,9 +2,9 @@ export default function Modal({ isOpen, onClose, onConfirm, title, message, chil
   if (!isOpen) return null;
 
   const colorClasses = {
-    blue: 'bg-blue-600 hover:bg-blue-500 shadow-blue-600/30',
-    red: 'bg-red-600 hover:bg-red-500 shadow-red-600/30',
-    green: 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/30',
+    blue: 'bg-ink hover:bg-slate-800 shadow-md',
+    red: 'bg-red-600 hover:bg-red-500 shadow-md',
+    green: 'bg-ink hover:bg-slate-800 shadow-md',
   };
 
   return (
@@ -16,16 +16,16 @@ export default function Modal({ isOpen, onClose, onConfirm, title, message, chil
       />
 
       {/* Modal Content */}
-      <div className="relative bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
-        <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
-        {message && <p className="text-slate-400 text-sm mb-6">{message}</p>}
+      <div className="relative paper-card border-slate-300 rounded-2xl p-6 w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200 rotate-[1deg]">
+        <h3 className="text-xl font-bold text-ink mb-2">{title}</h3>
+        {message && <p className="text-slate-600 font-bold mb-6">{message}</p>}
         {children && <div className="mb-6">{children}</div>}
 
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2.5 text-sm font-medium text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition cursor-pointer"
+            className="px-4 py-2.5 text-sm font-bold text-slate-600 hover:text-ink bg-paper-input hover:bg-paper-bg border border-slate-300 rounded-xl transition cursor-pointer"
           >
             İptal
           </button>
