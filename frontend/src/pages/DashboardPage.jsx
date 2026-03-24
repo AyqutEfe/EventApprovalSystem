@@ -44,51 +44,51 @@ export default function DashboardPage() {
 
     return (
         <div>
-            <div className="mb-8">
-                <h1 className="text-2xl font-bold text-ink">
+            <div className="mb-2">
+                <h1 className="text-xl font-bold text-ink">
                     Hoş geldiniz,{" "}
                     <span className="text-slate-700">{user?.username}</span>
                 </h1>
-                <p className="text-slate-600 mt-1">
+                <p className="text-slate-900 text-sm">
                     Etkinlik takvimini inceleyin
                 </p>
             </div>
 
             {/* İstatistik Kartları */}
-            <div className="grid grid-cols-4 gap-6 mb-8 mt-4">
-                <div className="paper-card crumpled pinned pt-8 pb-4 px-4 rotate-[1deg]">
+            <div className="grid grid-cols-4 gap-4 mb-2 mt-2">
+                <div className="paper-card crumpled pinned pt-6 pb-2 px-4 rotate-[1deg]">
                     <div className="pin"></div>
-                    <p className="text-slate-800 font-bold text-xs uppercase tracking-wider mb-1 relative z-10">
+                    <p className="text-slate-800 font-bold text-[10px] uppercase tracking-wider mb-0 relative z-10">
                         Toplam Etkinlik
                     </p>
-                    <p className="text-3xl font-bold text-ink relative z-10">
+                    <p className="text-2xl font-bold text-ink relative z-10">
                         {stats.total}
                     </p>
                 </div>
-                <div className="paper-card crumpled pinned pt-8 pb-4 px-4 -rotate-[1deg]">
+                <div className="paper-card crumpled pinned pt-6 pb-2 px-4 -rotate-[1deg]">
                     <div className="pin"></div>
-                    <p className="text-slate-800 font-bold text-xs uppercase tracking-wider mb-1 relative z-10">
+                    <p className="text-slate-800 font-bold text-[10px] uppercase tracking-wider mb-0 relative z-10">
                         Onaylanmış
                     </p>
-                    <p className="text-3xl font-bold text-emerald-800 relative z-10">
+                    <p className="text-2xl font-bold text-emerald-800 relative z-10">
                         {stats.approved}
                     </p>
                 </div>
-                <div className="paper-card crumpled pinned pt-8 pb-4 px-4 rotate-[2deg]">
+                <div className="paper-card crumpled pinned pt-6 pb-2 px-4 rotate-[2deg]">
                     <div className="pin"></div>
-                    <p className="text-slate-800 font-bold text-xs uppercase tracking-wider mb-1 relative z-10">
+                    <p className="text-slate-800 font-bold text-[10px] uppercase tracking-wider mb-0 relative z-10">
                         Danışman Onayı Bekliyor
                     </p>
-                    <p className="text-3xl font-bold text-amber-800 relative z-10">
+                    <p className="text-2xl font-bold text-amber-800 relative z-10">
                         {stats.pendingAdvisor}
                     </p>
                 </div>
-                <div className="paper-card crumpled pinned pt-8 pb-4 px-4 -rotate-[2deg]">
+                <div className="paper-card crumpled pinned pt-6 pb-2 px-4 -rotate-[2deg]">
                     <div className="pin"></div>
-                    <p className="text-slate-800 font-bold text-xs uppercase tracking-wider mb-1 relative z-10">
+                    <p className="text-slate-800 font-bold text-[10px] uppercase tracking-wider mb-0 relative z-10">
                         Müdür Onayı Bekliyor
                     </p>
-                    <p className="text-3xl font-bold text-sky-800 relative z-10">
+                    <p className="text-2xl font-bold text-sky-800 relative z-10">
                         {stats.pendingAdmin}
                     </p>
                 </div>

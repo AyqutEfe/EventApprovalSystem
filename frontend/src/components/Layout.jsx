@@ -231,7 +231,7 @@ export default function Layout({ children }) {
 
             {/* Main Content */}
             <main className="flex-1 ml-64">
-                <div className="p-8">{children}</div>
+                <div className="p-6">{children}</div>
             </main>
         </div>
     );
