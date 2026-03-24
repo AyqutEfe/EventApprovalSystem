@@ -20,13 +20,18 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor — 401 durumunda logout
+// Response Interceptor — 401/403 durumunda logout
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      useAuthStore.getState().logout();
-      window.location.href = '/login';
+    const status = error.response?.status;
+    if (status === 401 || status === 403) {
+      const { token } = useAuthStore.getState();
+      // Sadece token varken (oturum açıkken) ve login sayfasında değilken yönlendir
+      if (token && !window.location.pathname.includes('/login')) {
+        useAuthStore.getState().logout();
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
