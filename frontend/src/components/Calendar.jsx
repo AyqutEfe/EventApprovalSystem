@@ -36,9 +36,19 @@ export default function Calendar({ petitions = [] }) {
     const eventsByDate = useMemo(() => {
         const map = {};
         petitions.forEach((p) => {
-            const dateKey = p.eventDate;
-            if (!map[dateKey]) map[dateKey] = [];
-            map[dateKey].push(p);
+            if (!p.eventStartDate) return;
+            const start = new Date(p.eventStartDate);
+            const end = new Date(p.eventEndDate || p.eventStartDate);
+            // Ignore time portion for date mapping
+            let current = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+            const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+            
+            while (current <= endDay) {
+                const dateKey = format(current, "yyyy-MM-dd");
+                if (!map[dateKey]) map[dateKey] = [];
+                map[dateKey].push(p);
+                current.setDate(current.getDate() + 1);
+            }
         });
         return map;
     }, [petitions]);

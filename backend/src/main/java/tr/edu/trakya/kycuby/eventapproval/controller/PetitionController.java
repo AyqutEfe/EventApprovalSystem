@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import tr.edu.trakya.kycuby.eventapproval.dto.PetitionRequest;
 import tr.edu.trakya.kycuby.eventapproval.dto.PetitionResponse;
 import tr.edu.trakya.kycuby.eventapproval.exception.ResourceNotFoundException;
@@ -45,8 +46,10 @@ public class PetitionController {
      * Belirli bir tarihteki onaylanmış/bekleyen etkinlikleri kontrol eder.
      */
     @GetMapping("/check-date")
-    public ResponseEntity<List<PetitionResponse>> checkDate(@RequestParam java.time.LocalDate date) {
-        List<PetitionResponse> petitions = petitionService.getPetitionsByDate(date);
+    public ResponseEntity<List<PetitionResponse>> checkDate(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) java.time.LocalDate endDate) {
+        List<PetitionResponse> petitions = petitionService.getPetitionsByDate(startDate, endDate);
         return ResponseEntity.ok(petitions);
     }
 

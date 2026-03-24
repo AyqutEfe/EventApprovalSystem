@@ -34,6 +34,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         body.put("path", request.getServletPath());
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getOutputStream(), body);
+        response.getWriter().write(mapper.writeValueAsString(body));
+        response.getWriter().flush();
     }
 }

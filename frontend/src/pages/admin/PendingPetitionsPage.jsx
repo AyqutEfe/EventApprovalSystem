@@ -64,7 +64,11 @@ export default function PendingPetitionsPage() {
               {petitions.map((p) => (
                 <tr key={p.id} className="hover:bg-paper-input transition">
                   <td className="px-6 py-4 text-ink font-medium">{p.eventName}</td>
-                  <td className="px-6 py-4 text-slate-700 text-sm">{format(new Date(p.eventDate), 'dd.MM.yyyy')}</td>
+                  <td className="px-6 py-4 text-slate-700 text-sm">
+                    {p.eventStartDate === p.eventEndDate
+                      ? format(new Date(p.eventStartDate), 'dd.MM.yyyy')
+                      : `${format(new Date(p.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(p.eventEndDate), 'dd.MM.yyyy')}`}
+                  </td>
                   <td className="px-6 py-4 text-slate-700 text-sm">{p.clubName}</td>
                   <td className="px-6 py-4 text-slate-700 text-sm">{p.location}</td>
                   <td className="px-6 py-4"><StatusBadge status={p.status} /></td>

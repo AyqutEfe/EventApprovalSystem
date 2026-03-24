@@ -55,7 +55,7 @@ export default function AdvisorPetitionDetailPage() {
   const handleApproveClick = async () => {
     setActionLoading(true);
     try {
-      const { data: events } = await petitionService.checkDate(petition.eventDate);
+      const { data: events } = await petitionService.checkDate(petition.eventStartDate, petition.eventEndDate);
       const otherEvents = events.filter(e => e.id !== petition.id);
       
       if (otherEvents.length > 0) {
@@ -106,20 +106,65 @@ export default function AdvisorPetitionDetailPage() {
           <StatusBadge status={petition.status} />
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-paper-input border border-slate-300 rounded-xl p-4">
             <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Etkinlik Tarihi</p>
-            <p className="text-ink font-medium">{format(new Date(petition.eventDate), 'dd.MM.yyyy')}</p>
+            <p className="text-ink font-medium">
+              {petition.eventStartDate === petition.eventEndDate
+                ? format(new Date(petition.eventStartDate), 'dd.MM.yyyy')
+                : `${format(new Date(petition.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(petition.eventEndDate), 'dd.MM.yyyy')}`}
+            </p>
           </div>
           <div className="bg-paper-input border border-slate-300 rounded-xl p-4">
-            <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Lokasyon</p>
+            <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Etkinlik Saati</p>
+            <p className="text-ink font-medium">
+              {petition.eventStartTime === petition.eventEndTime
+                ? petition.eventStartTime
+                : `${petition.eventStartTime} - ${petition.eventEndTime}`}
+            </p>
+          </div>
+          <div className="bg-paper-input border border-slate-300 rounded-xl p-4">
+            <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Etkinlik Yeri</p>
             <p className="text-ink font-medium">{petition.location}</p>
+          </div>
+          <div className="bg-paper-input border border-slate-300 rounded-xl p-4">
+            <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Belge Oluşturma Tarihi</p>
+            <p className="text-ink font-medium">{petition.createdAt ? format(new Date(petition.createdAt), 'dd.MM.yyyy HH:mm') : '—'}</p>
           </div>
         </div>
 
-        <div className="mb-8">
-          <p className="text-slate-600 font-bold text-xs uppercase tracking-wider mb-2">Açıklama</p>
-          <p className="text-ink leading-relaxed">{petition.description}</p>
+        <div className="space-y-4 mb-8">
+          <div>
+            <p className="text-slate-600 font-bold text-xs uppercase tracking-wider mb-2">Etkinliğin İçeriği</p>
+            <p className="text-ink leading-relaxed">{petition.eventContent || '—'}</p>
+          </div>
+          {petition.supportInfo && (
+            <div>
+              <p className="text-slate-600 font-bold text-xs uppercase tracking-wider mb-2">Destek Veren Kurum ve Desteğin Niteliği</p>
+              <p className="text-ink leading-relaxed">{petition.supportInfo}</p>
+            </div>
+          )}
+          {petition.speakerInfo && (() => {
+            let speakers = [];
+            try { speakers = JSON.parse(petition.speakerInfo); } catch { speakers = []; }
+            return speakers.length > 0 ? (
+              <div>
+                <p className="text-slate-600 font-bold text-xs uppercase tracking-wider mb-2">Konuşmacılar</p>
+                <div className="space-y-2">
+                  {speakers.map((s, i) => (
+                    <div key={i} className="bg-paper-input border border-slate-300 rounded-lg px-3 py-2">
+                      <p className="text-ink font-medium text-sm">{s.fullName}</p>
+                      {(s.title || s.company) && (
+                        <p className="text-slate-500 text-xs">
+                          {s.company ? s.company + (s.title ? ', ' + s.title : '') : s.title}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null;
+          })()}
         </div>
 
         {petition.status === 'REJECTED' && petition.rejectionReason && (

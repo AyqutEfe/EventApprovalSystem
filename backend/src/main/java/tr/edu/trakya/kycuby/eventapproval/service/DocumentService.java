@@ -10,7 +10,11 @@ import tr.edu.trakya.kycuby.eventapproval.entity.Petition;
 import java.io.*;
 import java.nio.file.*;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Apache POI kullanarak Word şablonunu dolduran belge otomasyon servisi.
@@ -29,8 +33,8 @@ public class DocumentService {
     /**
      * Dilekçe verileriyle Word belgesini oluşturur.
      *
-     * @param petition  form verileri
-     * @param clubName  kulüp adı
+     * @param petition      form verileri
+     * @param clubName      kulüp adı
      * @param presidentName başkan adı
      * @return oluşturulan dosyanın yolu
      */
@@ -47,17 +51,7 @@ public class DocumentService {
             XWPFDocument document = new XWPFDocument(templateStream);
 
             // Yer tutucu haritası
-            Map<String, String> placeholders = Map.of(
-                    "${etkinlikAdi}", petition.getEventName(),
-                    "${etkinlikTarihi}", petition.getEventDate().format(DATE_FORMATTER),
-                    "${etkinlikYeri}", petition.getLocation(),
-                    "${aciklama}", petition.getDescription(),
-                    "${kulupAdi}", clubName,
-                    "${baskanAdi}", presidentName,
-                    "${tarih}", petition.getCreatedAt() != null
-                            ? petition.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-                            : "—"
-            );
+            Map<String, String> placeholders = buildPlaceholders(petition, clubName, presidentName);
 
             // Paragraflar içindeki yer tutucuları değiştir
             replacePlaceholdersInParagraphs(document.getParagraphs(), placeholders);
@@ -98,6 +92,66 @@ public class DocumentService {
     }
 
     /**
+     * Yer tutucu haritasını oluşturur.
+     */
+    private Map<String, String> buildPlaceholders(Petition petition, String clubName, String presidentName) {
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("${kulupAdi}", clubName);
+        placeholders.put("${etkinlikAdi}", petition.getEventName());
+        String dateStr = petition.getEventStartDate().equals(petition.getEventEndDate()) ?
+                petition.getEventStartDate().format(DATE_FORMATTER) :
+                petition.getEventStartDate().format(DATE_FORMATTER) + " - " + petition.getEventEndDate().format(DATE_FORMATTER);
+        placeholders.put("${etkinlikTarihi}", dateStr);
+        String timeStr = petition.getEventStartTime().equals(petition.getEventEndTime()) ?
+                petition.getEventStartTime() :
+                petition.getEventStartTime() + " - " + petition.getEventEndTime();
+        placeholders.put("${etkinlikSaati}", timeStr);
+        placeholders.put("${etkinlikYeri}", petition.getLocation());
+        placeholders.put("${etkinlikIcerigi}", petition.getEventContent());
+        placeholders.put("${destekBilgisi}", petition.getSupportInfo() != null ? petition.getSupportInfo() : "—");
+        placeholders.put("${konusmaciBilgisi}", formatSpeakerInfo(petition.getSpeakerInfo()));
+        placeholders.put("${baskanAdi}", presidentName);
+        placeholders.put("${belgeOlusturmaTarihi}", petition.getCreatedAt() != null
+                ? petition.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+                : "—");
+        return placeholders;
+    }
+
+    private String formatSpeakerInfo(String speakerJson) {
+        if (speakerJson == null || speakerJson.trim().isEmpty()) {
+            return "—";
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<Map<String, String>> speakers = mapper.readValue(speakerJson, new TypeReference<List<Map<String, String>>>() {});
+            if (speakers.isEmpty()) return "—";
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < speakers.size(); i++) {
+                Map<String, String> s = speakers.get(i);
+                String fullName = s.getOrDefault("fullName", "");
+                String title = s.getOrDefault("title", "");
+                String company = s.getOrDefault("company", "");
+                sb.append(fullName);
+                if (!title.isEmpty() || !company.isEmpty()) {
+                    sb.append(" (");
+                    if (!title.isEmpty()) sb.append(title);
+                    if (!title.isEmpty() && !company.isEmpty()) sb.append(", ");
+                    if (!company.isEmpty()) sb.append(company);
+                    sb.append(")");
+                }
+                if (i < speakers.size() - 1) {
+                    sb.append(", ");
+                }
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            log.warn("Konuşmacı JSON formatı çözülemedi, ham metin kullanılacak.", e);
+            return speakerJson;
+        }
+    }
+
+    /**
      * Şablon yoksa varsayılan bir belge oluşturur.
      */
     private String generateDefaultDocument(Petition petition, String clubName, String presidentName) throws IOException {
@@ -113,17 +167,34 @@ public class DocumentService {
         titleRun.addBreak();
 
         // Kulüp bilgisi
-        addParagraph(document, "Kulüp Adı: " + clubName);
+        addParagraph(document, "Topluluk Adı: " + clubName);
         addParagraph(document, "Başkan: " + presidentName);
         addParagraph(document, "");
 
         // Etkinlik bilgileri
         addParagraph(document, "Etkinlik Adı: " + petition.getEventName());
-        addParagraph(document, "Etkinlik Tarihi: " + petition.getEventDate().format(DATE_FORMATTER));
+        String dateStr = petition.getEventStartDate().equals(petition.getEventEndDate()) ?
+                petition.getEventStartDate().format(DATE_FORMATTER) :
+                petition.getEventStartDate().format(DATE_FORMATTER) + " - " + petition.getEventEndDate().format(DATE_FORMATTER);
+        addParagraph(document, "Etkinlik Tarihi: " + dateStr);
+        String timeStr = petition.getEventStartTime().equals(petition.getEventEndTime()) ?
+                petition.getEventStartTime() :
+                petition.getEventStartTime() + " - " + petition.getEventEndTime();
+        addParagraph(document, "Etkinlik Saati: " + timeStr);
         addParagraph(document, "Etkinlik Yeri: " + petition.getLocation());
         addParagraph(document, "");
-        addParagraph(document, "Açıklama:");
-        addParagraph(document, petition.getDescription());
+        addParagraph(document, "Etkinliğin İçeriği:");
+        addParagraph(document, petition.getEventContent());
+        addParagraph(document, "");
+        addParagraph(document, "Etkinliğe Destek Veren Kurum ve Desteğin Niteliği:");
+        addParagraph(document, petition.getSupportInfo() != null ? petition.getSupportInfo() : "—");
+        addParagraph(document, "");
+        addParagraph(document, "Konuşmacı Adı-Soyadı, Kurum ve Unvanı:");
+        addParagraph(document, formatSpeakerInfo(petition.getSpeakerInfo()));
+        addParagraph(document, "");
+        addParagraph(document, "Belge Oluşturma Tarihi: " + (petition.getCreatedAt() != null
+                ? petition.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+                : "—"));
 
         // Çıktı
         Path outputPath = Paths.get(outputDir);

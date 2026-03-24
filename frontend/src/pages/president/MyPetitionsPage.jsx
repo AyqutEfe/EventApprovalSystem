@@ -74,7 +74,11 @@ export default function MyPetitionsPage() {
               {petitions.map((p) => (
                 <tr key={p.id} className="hover:bg-paper-input transition">
                   <td className="px-6 py-4 text-ink font-bold">{p.eventName}</td>
-                  <td className="px-6 py-4 text-slate-600 text-sm">{format(new Date(p.eventDate), 'dd.MM.yyyy')}</td>
+                  <td className="px-6 py-4 text-slate-600 text-sm">
+                    {p.eventStartDate === p.eventEndDate
+                      ? format(new Date(p.eventStartDate), 'dd.MM.yyyy')
+                      : `${format(new Date(p.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(p.eventEndDate), 'dd.MM.yyyy')}`}
+                  </td>
                   <td className="px-6 py-4 text-slate-600 text-sm">{p.location}</td>
                   <td className="px-6 py-4"><StatusBadge status={p.status} /></td>
                   <td className="px-6 py-4 text-right">

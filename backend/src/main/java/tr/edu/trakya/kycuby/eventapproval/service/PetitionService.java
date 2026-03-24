@@ -56,9 +56,14 @@ public class PetitionService {
 
         Petition petition = Petition.builder()
                 .eventName(request.eventName())
-                .eventDate(request.eventDate())
+                .eventStartDate(request.eventStartDate())
+                .eventEndDate(request.eventEndDate())
                 .location(request.location())
-                .description(request.description())
+                .eventStartTime(request.eventStartTime())
+                .eventEndTime(request.eventEndTime())
+                .eventContent(request.eventContent())
+                .supportInfo(request.supportInfo())
+                .speakerInfo(request.speakerInfo())
                 .status(PetitionStatus.PENDING_ADVISOR)
                 .club(club)
                 .createdBy(president)
@@ -230,9 +235,10 @@ public class PetitionService {
     /**
      * Belirli bir tarihteki onaylanmış veya onay bekleyen etkinlikleri getirir (Takvim çakışması uyarısı için).
      */
-    public List<PetitionResponse> getPetitionsByDate(LocalDate date) {
-        List<Petition> petitions = petitionRepository.findByEventDateAndStatusIn(
-                date,
+    public List<PetitionResponse> getPetitionsByDate(LocalDate startDate, LocalDate endDate) {
+        List<Petition> petitions = petitionRepository.findByEventStartDateLessThanEqualAndEventEndDateGreaterThanEqualAndStatusIn(
+                endDate,
+                startDate,
                 List.of(PetitionStatus.APPROVED, PetitionStatus.PENDING_ADMIN, PetitionStatus.PENDING_ADVISOR)
         );
         return petitionMapper.toResponseList(petitions);

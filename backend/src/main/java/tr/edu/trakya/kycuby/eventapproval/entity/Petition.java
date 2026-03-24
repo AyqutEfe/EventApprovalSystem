@@ -24,14 +24,29 @@ public class Petition {
     @Column(name = "event_name", nullable = false, length = 200)
     private String eventName;
 
-    @Column(name = "event_date", nullable = false)
-    private LocalDate eventDate;
+    @Column(name = "event_start_date", nullable = false)
+    private LocalDate eventStartDate;
+
+    @Column(name = "event_end_date", nullable = false)
+    private LocalDate eventEndDate;
 
     @Column(nullable = false, length = 200)
     private String location;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "event_start_time", nullable = false, length = 50)
+    private String eventStartTime;
+
+    @Column(name = "event_end_time", nullable = false, length = 50)
+    private String eventEndTime;
+
+    @Column(name = "event_content", columnDefinition = "TEXT", nullable = false)
+    private String eventContent;
+
+    @Column(name = "support_info", columnDefinition = "TEXT")
+    private String supportInfo;
+
+    @Column(name = "speaker_info", columnDefinition = "TEXT")
+    private String speakerInfo;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)

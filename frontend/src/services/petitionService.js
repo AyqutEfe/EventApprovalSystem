@@ -10,5 +10,5 @@ export const petitionService = {
   // Takvim (tüm roller)
   getCalendar: () => api.get('/petitions/calendar'),
   // Takvim çakışması kontrolü
-  checkDate: (date) => api.get('/petitions/check-date', { params: { date } }),
+  checkDate: (startDate, endDate) => api.get('/petitions/check-date', { params: { startDate, endDate } }),
 };

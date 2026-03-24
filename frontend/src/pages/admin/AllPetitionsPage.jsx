@@ -121,10 +121,9 @@ export default function AllPetitionsPage() {
                                         {p.eventName}
                                     </td>
                                     <td className="px-6 py-4 text-slate-700 text-sm">
-                                        {format(
-                                            new Date(p.eventDate),
-                                            "dd.MM.yyyy",
-                                        )}
+                                        {p.eventStartDate === p.eventEndDate
+                                          ? format(new Date(p.eventStartDate), 'dd.MM.yyyy')
+                                          : `${format(new Date(p.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(p.eventEndDate), 'dd.MM.yyyy')}`}
                                     </td>
                                     <td className="px-6 py-4 text-slate-700 text-sm">
                                         {p.clubName}

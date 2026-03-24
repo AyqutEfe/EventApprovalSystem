@@ -21,13 +21,14 @@ public interface PetitionRepository extends JpaRepository<Petition, Long> {
 
     List<Petition> findByStatusIn(List<PetitionStatus> statuses);
 
-    List<Petition> findByEventDateAndStatusIn(LocalDate eventDate, List<PetitionStatus> statuses);
+    List<Petition> findByEventStartDateLessThanEqualAndEventEndDateGreaterThanEqualAndStatusIn(LocalDate endDate, LocalDate startDate, List<PetitionStatus> statuses);
 
     /**
      * Takvim çakışması kontrolü: aynı tarih ve lokasyonda onaylanmış etkinlik var mı?
      */
-    boolean existsByEventDateAndLocationAndStatusIn(
-            LocalDate eventDate,
+    boolean existsByEventStartDateLessThanEqualAndEventEndDateGreaterThanEqualAndLocationAndStatusIn(
+            LocalDate endDate,
+            LocalDate startDate,
             String location,
             List<PetitionStatus> statuses
     );
