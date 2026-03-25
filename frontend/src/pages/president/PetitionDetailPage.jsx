@@ -154,7 +154,7 @@ export default function PetitionDetailPage() {
           </div>
         )}
 
-        {petition.status === 'APPROVED' && petition.filePath && (
+        {petition.status !== 'REJECTED' && petition.filePath && (
           <button
             onClick={handleDownload}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition shadow-md cursor-pointer mt-4"
