@@ -100,6 +100,7 @@ export default function AdvisorPetitionsPage() {
                       <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Etkinlik</th>
                       <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Tarih</th>
                       <th className="text-left text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">Durum</th>
+                      <th className="text-right text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">İşlem</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200">
@@ -112,6 +113,11 @@ export default function AdvisorPetitionsPage() {
                             : `${format(new Date(p.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(p.eventEndDate), 'dd.MM.yyyy')}`}
                         </td>
                         <td className="px-6 py-4"><StatusBadge status={p.status} /></td>
+                        <td className="px-6 py-4 text-right">
+                          <Link to={`/advisor/petitions/${p.id}`} className="text-ink hover:text-slate-600 underline text-sm font-bold transition">
+                            Detay →
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
