@@ -93,10 +93,10 @@ export default function PendingPetitionsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-300">
-                <SortableHeader label="Etkinlik" sortKey="eventName" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
-                <SortableHeader label="Tarih" sortKey="eventStartDate" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                <SortableHeader label="Etkinlik Adı" sortKey="eventName" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                <SortableHeader label="Belge Oluşturma Tarihi" sortKey="createdAt" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                <SortableHeader label="Etkinlik Tarihi" sortKey="eventStartDate" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
                 <SortableHeader label="Kulüp" sortKey="clubName" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
-                <SortableHeader label="Lokasyon" sortKey="location" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
                 <SortableHeader label="Durum" sortKey="status" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
                 <th className="text-right text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">İşlem</th>
               </tr>
@@ -106,12 +106,14 @@ export default function PendingPetitionsPage() {
                 <tr key={p.id} className="hover:bg-paper-input transition">
                   <td className="px-6 py-4 text-ink font-medium">{p.eventName}</td>
                   <td className="px-6 py-4 text-slate-700 text-sm">
+                      {format(new Date(p.createdAt), "dd.MM.yyyy")}
+                  </td>
+                  <td className="px-6 py-4 text-slate-700 text-sm">
                     {p.eventStartDate === p.eventEndDate
                       ? format(new Date(p.eventStartDate), 'dd.MM.yyyy')
                       : `${format(new Date(p.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(p.eventEndDate), 'dd.MM.yyyy')}`}
                   </td>
                   <td className="px-6 py-4 text-slate-700 text-sm">{p.clubName}</td>
-                  <td className="px-6 py-4 text-slate-700 text-sm">{p.location}</td>
                   <td className="px-6 py-4"><StatusBadge status={p.status} /></td>
                   <td className="px-6 py-4 text-right">
                     <Link to={`/admin/petitions/${p.id}`} className="text-ink hover:text-slate-600 underline font-bold text-sm transition">
