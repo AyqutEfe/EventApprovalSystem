@@ -236,9 +236,9 @@ public class PetitionService {
      * Belirli bir tarihteki onaylanmış veya onay bekleyen etkinlikleri getirir (Takvim çakışması uyarısı için).
      */
     public List<PetitionResponse> getPetitionsByDate(LocalDate startDate, LocalDate endDate) {
-        List<Petition> petitions = petitionRepository.findByEventStartDateLessThanEqualAndEventEndDateGreaterThanEqualAndStatusIn(
-                endDate,
+        List<Petition> petitions = petitionRepository.findOverlappingPetitions(
                 startDate,
+                endDate,
                 List.of(PetitionStatus.APPROVED, PetitionStatus.PENDING_ADMIN, PetitionStatus.PENDING_ADVISOR)
         );
         return petitionMapper.toResponseList(petitions);
