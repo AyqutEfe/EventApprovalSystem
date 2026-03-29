@@ -11,6 +11,7 @@ import tr.edu.trakya.kycuby.eventapproval.entity.Petition;
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -77,8 +78,11 @@ public class DocumentService {
 
     private void buildPage1Letter(XWPFDocument doc, Petition petition,
             String clubName, String advisorName) {
+        // Tarih (sağ üst)
+        addRightAlignedParagraph(doc, LocalDate.now().format(DATE_FORMATTER), false);
+
         // Üst boşluk
-        addEmptyParagraphs(doc, 3);
+        addEmptyParagraphs(doc, 2);
 
         // Başlık bloku (ortalı, bold)
         addCenteredBoldParagraph(doc, "TRAKYA ÜNİVERSİTESİ", 12);
