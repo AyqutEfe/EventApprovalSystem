@@ -6,9 +6,9 @@
   --color-paper-input: #f2eacc;
   --color-paper-desk: #c7a477;
   --color-ink: #1e293b;
-  --color-highlight-green: #dcfce7;
-  --color-highlight-red: #ffe4e6;
-  --color-highlight-yellow: #fef08a;
+  --color-highlight-green: #39ff6a;
+  --color-highlight-red: #ff3f6c;
+  --color-highlight-yellow: #faff00;
   
   --font-handwriting: 'Kalam', cursive;
 }
@@ -101,7 +101,7 @@ body {
   z-index: -1;
   border-radius: 3px;
   transform: rotate(-1deg);
-  opacity: 0.8;
+  opacity: 0.7;
   mix-blend-mode: multiply;
 }
 
