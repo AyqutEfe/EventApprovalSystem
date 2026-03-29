@@ -467,16 +467,16 @@ export default function CreatePetitionPage() {
                         <button
                             type="button"
                             onClick={() => navigate("/petitions/my")}
-                            className="px-6 py-3 text-sm font-bold text-slate-600 hover:text-ink hover:bg-paper-bg bg-paper-input border border-slate-300 shadow-sm rounded-xl transition cursor-pointer"
+                            className="px-6 py-3 bg-rose-50 border-2 border-rose-600 text-rose-700 font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-[3px_3px_0px_0px_#e11d48] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#e11d48] active:translate-y-[3px] active:shadow-none"
                         >
                             İptal
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex-1 py-3 bg-ink hover:bg-slate-800 text-white font-semibold rounded-xl transition disabled:opacity-50 cursor-pointer shadow-sm"
+                            className="flex-1 py-3 bg-emerald-50 border-2 border-emerald-600 text-emerald-700 font-bold rounded-xl transition-all duration-200 disabled:opacity-50 cursor-pointer shadow-[3px_3px_0px_0px_#059669] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#059669] active:translate-y-[3px] active:shadow-none"
                         >
-                            {loading ? "İşleniyor..." : "Dilekçe Oluştur"}
+                            {loading ? 'Oluşturuluyor...' : 'Dilekçe Oluştur'}
                         </button>
                     </div>
                 </form>

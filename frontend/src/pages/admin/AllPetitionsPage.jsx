@@ -77,16 +77,30 @@ export default function AllPetitionsPage() {
                         <button
                             key={f.key}
                             onClick={() => setFilter(f.key)}
-                            className={`px-4 py-2 text-sm font-bold rounded-xl border transition whitespace-nowrap cursor-pointer ${
+                            className={`relative px-4 py-2 text-sm font-bold rounded-xl border transition-colors whitespace-nowrap cursor-pointer outline-none focus:outline-none ${
                                 filter === f.key
-                                    ? "bg-ink text-white border-ink shadow-md"
-                                    : "bg-paper-input border-slate-300 text-slate-600 hover:text-ink hover:bg-paper-bg"
+                                    ? "bg-paper-input border-slate-300 text-ink shadow-sm"
+                                    : "bg-paper-input border-slate-300 text-slate-600 hover:text-ink hover:bg-paper-bg shadow-sm"
                             }`}
                         >
-                            {f.label}
-                            {f.key === "ALL" && ` (${petitions.length})`}
-                            {f.key !== "ALL" &&
-                                ` (${petitions.filter((p) => p.status === f.key).length})`}
+                            {filter === f.key && (
+                                <svg 
+                                    className="absolute inset-0 w-full h-full text-yellow-400/60 pointer-events-none" 
+                                    preserveAspectRatio="none" 
+                                    viewBox="0 0 100 100"
+                                >
+                                    <path 
+                                        d="M 2 50 C 30 20 70 20 98 50 C 70 80 30 80 2 60 Z" 
+                                        fill="currentColor" 
+                                    />
+                                </svg>
+                            )}
+                            <span className="relative z-10">
+                                {f.label}
+                                {f.key === "ALL" && ` (${petitions.length})`}
+                                {f.key !== "ALL" &&
+                                    ` (${petitions.filter((p) => p.status === f.key).length})`}
+                            </span>
                         </button>
                     ))}
 

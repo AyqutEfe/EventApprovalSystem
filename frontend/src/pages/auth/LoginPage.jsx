@@ -35,26 +35,15 @@ export default function LoginPage() {
         <div className="min-h-screen bg-paper-desk flex items-center justify-center px-4">
             <div className="w-full max-w-md">
                 {/* Logo / Başlık */}
-                <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-ink mb-4 shadow-sm border border-slate-300">
-                        <svg
-                            className="w-8 h-8 text-white"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                        </svg>
-                    </div>
-                    <h1 className="text-2xl font-bold text-ink">
-                        KYCUBYO Etkinlik Onay
+                <div className="text-center mb-8 flex flex-col items-center">
+                    <h1 className="text-4xl font-black text-ink tracking-tight mb-2">
+                        KYCUBYO
+                        <br />
+                        <span className="text-2xl font-bold tracking-wide uppercase text-slate-700">Etkinlik Onay</span>
                     </h1>
-                    <p className="text-slate-600 mt-1">Hesabınıza giriş yapın</p>
+                    <p className="text-slate-600 mt-1 font-medium">
+                        Hesabınıza giriş yapın
+                    </p>
                 </div>
 
                 {/* Form Kartı */}
@@ -99,7 +88,7 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3 bg-ink hover:bg-slate-800 text-white font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                            className="w-full py-3 bg-paper-input border-2 border-ink text-ink font-bold text-lg rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-[4px_4px_0px_0px_#0f172a] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_#0f172a] active:translate-y-[4px] active:shadow-none"
                         >
                             {loading ? (
                                 <span className="inline-flex items-center gap-2">

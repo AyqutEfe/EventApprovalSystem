@@ -25,14 +25,20 @@ export default function Modal({ isOpen, onClose, onConfirm, title, message, chil
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2.5 text-sm font-bold text-slate-600 hover:text-ink bg-paper-input hover:bg-paper-bg border border-slate-300 rounded-xl transition cursor-pointer"
+            className="px-4 py-2 bg-paper-input border-2 border-slate-400 text-slate-600 text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-[3px_3px_0px_0px_#94a3b8] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#94a3b8] active:translate-y-[3px] active:shadow-none disabled:opacity-50"
           >
             İptal
           </button>
           <button
             onClick={onConfirm}
             disabled={loading}
-            className={`px-4 py-2.5 text-sm font-medium text-white rounded-xl transition shadow-lg cursor-pointer disabled:opacity-50 ${colorClasses[confirmColor]}`}
+            className={`px-4 py-2 text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer disabled:opacity-50 ${
+                confirmColor === 'red' 
+                    ? 'bg-rose-50 border-2 border-rose-600 text-rose-700 shadow-[3px_3px_0px_0px_#e11d48] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#e11d48] active:translate-y-[3px] active:shadow-none'
+                : confirmColor === 'green'
+                    ? 'bg-emerald-50 border-2 border-emerald-600 text-emerald-700 shadow-[3px_3px_0px_0px_#059669] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#059669] active:translate-y-[3px] active:shadow-none'
+                : 'bg-blue-50 border-2 border-blue-600 text-blue-700 shadow-[3px_3px_0px_0px_#2563eb] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#2563eb] active:translate-y-[3px] active:shadow-none'
+            }`}
           >
             {loading ? (
               <span className="inline-flex items-center gap-2">

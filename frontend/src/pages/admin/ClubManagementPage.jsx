@@ -74,12 +74,12 @@ export default function ClubManagementPage() {
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition shadow-md cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-paper-input border-2 border-ink text-ink text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-[3px_3px_0px_0px_#0f172a] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#0f172a] active:translate-y-[3px] active:shadow-none"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
           </svg>
-          Yeni Kulüp
+          Yeni Kulüp Ekle
         </button>
       </div>
 
@@ -142,9 +142,9 @@ export default function ClubManagementPage() {
               <button
                 type="submit"
                 disabled={formLoading}
-                className="px-6 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition disabled:opacity-50 cursor-pointer shadow-md"
+                className="px-6 py-2.5 bg-paper-input border-2 border-ink text-ink text-sm font-bold rounded-xl transition-all duration-200 disabled:opacity-50 cursor-pointer shadow-[3px_3px_0px_0px_#0f172a] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#0f172a] active:translate-y-[3px] active:shadow-none"
               >
-                {formLoading ? 'Oluşturuluyor...' : 'Kulüp Oluştur'}
+                {formLoading ? 'Kaydediliyor...' : 'Kaydet'}
               </button>
             </div>
           </form>

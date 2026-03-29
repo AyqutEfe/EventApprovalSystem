@@ -32,8 +32,18 @@ const roleLabels = {
 
 const icons = {
     calendar: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <svg
+            className="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
         </svg>
     ),
     list: (
@@ -145,30 +155,13 @@ export default function Layout({ children }) {
             <aside className="w-64 bg-paper-bg border-r border-slate-300 shadow-sm flex flex-col fixed h-full z-10">
                 {/* Logo */}
                 <div className="p-6 border-b border-slate-300">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-ink flex items-center justify-center shadow-md rotate-[2deg]">
-                            <svg
-                                className="w-5 h-5 text-white"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                                />
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 className="text-ink font-bold text-sm">
-                                KYCUBYO
-                            </h1>
-                            <p className="text-slate-500 text-xs">
-                                Etkinlik Onay
-                            </p>
-                        </div>
+                    <div className="flex flex-col">
+                        <h1 className="text-ink font-black text-3xl tracking-tight leading-none mb-1">
+                            KYCUBYO
+                        </h1>
+                        <p className="text-slate-600 font-bold text-sm tracking-wide uppercase">
+                            Etkinlik Onay
+                        </p>
                     </div>
                 </div>
 
@@ -189,19 +182,23 @@ export default function Layout({ children }) {
                             {({ isActive }) => (
                                 <>
                                     {isActive && (
-                                        <svg 
-                                            className="absolute inset-0 w-full h-full text-yellow-400/60 pointer-events-none" 
-                                            preserveAspectRatio="none" 
+                                        <svg
+                                            className="absolute inset-0 w-full h-full text-yellow-400/60 pointer-events-none"
+                                            preserveAspectRatio="none"
                                             viewBox="0 0 100 100"
                                         >
-                                            <path 
-                                                d="M 2 50 C 30 20 70 20 98 50 C 70 80 30 80 2 60 Z" 
-                                                fill="currentColor" 
+                                            <path
+                                                d="M 2 50 C 30 20 70 20 98 50 C 70 80 30 80 2 60 Z"
+                                                fill="currentColor"
                                             />
                                         </svg>
                                     )}
                                     <div className="relative z-10 flex items-center gap-3">
-                                        <span className={isActive ? "text-ink" : ""}>
+                                        <span
+                                            className={
+                                                isActive ? "text-ink" : ""
+                                            }
+                                        >
                                             {icons[item.icon]}
                                         </span>
                                         {item.label}
@@ -213,18 +210,36 @@ export default function Layout({ children }) {
                 </nav>
 
                 {/* User Info & Logout */}
-                <div className="p-4 border-t border-slate-300">
-                    <div className="flex items-center gap-3 mb-3 px-2">
-                        <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-ink text-sm font-bold shadow-sm border border-slate-300">
-                            {user?.username?.[0]?.toUpperCase() || "?"}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <p className="text-ink text-sm font-bold truncate">
+                <div className="p-4 border-t border-slate-300 flex flex-col items-center">
+                    <div className="relative flex items-center justify-center w-full max-w-[140px] mb-4 group cursor-default">
+                        {/* Red Wax Seal Background */}
+                        <svg viewBox="0 0 100 100" className="w-full h-auto drop-shadow-md text-[#8B0000]">
+                            <path
+                                fill="currentColor"
+                                d="M50,4 C65,2 80,10 88,22 C95,33 97,48 93,62 C88,77 75,88 60,94 C46,98 30,95 18,84 C6,72 2,55 5,40 C8,25 20,12 35,6 C40,4 45,5 50,4 Z"
+                            />
+                            <path
+                                fill="none"
+                                stroke="#5c0000"
+                                strokeWidth="2"
+                                d="M50,12 C62,10 74,16 80,26 C86,35 88,47 84,58 C80,70 70,78 58,83 C46,87 34,84 24,76 C14,66 11,52 13,40 C16,28 26,18 38,13 C42,11 46,12 50,12 Z"
+                            />
+                            <circle cx="50" cy="50" r="34" fill="#A52A2A" />
+                            <path
+                                fill="none"
+                                stroke="#cc3333"
+                                strokeWidth="1.5"
+                                strokeDasharray="4 4"
+                                d="M50,17 A33,33 0 1,1 49.9,17"
+                            />
+                        </svg>
+                        <div className="absolute flex flex-col items-center justify-center inset-0 text-[#f5f5dc] transform -rotate-[5deg] px-6">
+                            <span className="text-[12px] font-black tracking-widest uppercase drop-shadow-sm text-center leading-tight line-clamp-2">
                                 {user?.username}
-                            </p>
-                            <p className="text-slate-500 text-xs font-medium">
+                            </span>
+                            <span className="text-[7px] font-bold tracking-widest uppercase mt-1 opacity-90 text-center line-clamp-1">
                                 {roleLabels[user?.role] || user?.role}
-                            </p>
+                            </span>
                         </div>
                     </div>
                     <button

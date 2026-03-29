@@ -62,10 +62,10 @@ export default function MyPetitionsPage() {
         </div>
         <Link
           to="/petitions/create"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-medium rounded-xl transition shadow-sm whitespace-nowrap"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-paper-input border-2 border-ink text-ink text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer whitespace-nowrap shadow-[3px_3px_0px_0px_#0f172a] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#0f172a] active:translate-y-[3px] active:shadow-none"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
           </svg>
           Yeni Dilekçe
         </Link>
@@ -76,16 +76,30 @@ export default function MyPetitionsPage() {
               <button
                   key={f.key}
                   onClick={() => setFilter(f.key)}
-                  className={`px-4 py-2 text-sm font-bold rounded-xl border transition whitespace-nowrap cursor-pointer ${
+                  className={`relative px-4 py-2 text-sm font-bold rounded-xl border transition-colors whitespace-nowrap cursor-pointer outline-none focus:outline-none ${
                       filter === f.key
-                          ? "bg-ink text-white border-ink shadow-md"
-                          : "bg-paper-input border-slate-300 text-slate-600 hover:text-ink hover:bg-paper-bg"
+                          ? "bg-paper-input border-slate-300 text-ink shadow-sm"
+                          : "bg-paper-input border-slate-300 text-slate-600 hover:text-ink hover:bg-paper-bg shadow-sm"
                   }`}
               >
-                  {f.label}
-                  {f.key === "ALL" && ` (${petitions.length})`}
-                  {f.key !== "ALL" &&
-                      ` (${petitions.filter((p) => p.status === f.key).length})`}
+                  {filter === f.key && (
+                      <svg 
+                          className="absolute inset-0 w-full h-full text-yellow-400/60 pointer-events-none" 
+                          preserveAspectRatio="none" 
+                          viewBox="0 0 100 100"
+                      >
+                          <path 
+                              d="M 2 50 C 30 20 70 20 98 50 C 70 80 30 80 2 60 Z" 
+                              fill="currentColor" 
+                          />
+                      </svg>
+                  )}
+                  <span className="relative z-10">
+                      {f.label}
+                      {f.key === "ALL" && ` (${petitions.length})`}
+                      {f.key !== "ALL" &&
+                          ` (${petitions.filter((p) => p.status === f.key).length})`}
+                  </span>
               </button>
           ))}
       </div>

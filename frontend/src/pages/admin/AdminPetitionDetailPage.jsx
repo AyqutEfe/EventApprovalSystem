@@ -208,10 +208,10 @@ export default function AdminPetitionDetailPage() {
         {petition.status !== 'REJECTED' && petition.filePath && (
           <button
             onClick={handleDownload}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink hover:bg-slate-800 text-white text-sm font-bold rounded-xl transition shadow-md cursor-pointer mb-4"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-paper-input border-2 border-ink text-ink text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer mb-4 shadow-[3px_3px_0px_0px_#0f172a] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#0f172a] active:translate-y-[3px] active:shadow-none"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             Belgeyi İndir (.docx)
           </button>
@@ -221,13 +221,13 @@ export default function AdminPetitionDetailPage() {
           <div className="flex gap-3 pt-4 border-t border-slate-300">
             <button
               onClick={() => setModal({ open: true, type: 'reject' })}
-              className="px-6 py-3 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 border border-red-300 rounded-xl transition cursor-pointer"
+              className="flex-[0.5] py-3 bg-rose-50 border-2 border-rose-600 text-rose-700 font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-[3px_3px_0px_0px_#e11d48] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#e11d48] active:translate-y-[3px] active:shadow-none"
             >
               Reddet
             </button>
             <button
               onClick={handleApproveClick}
-              className="flex-1 py-3 bg-ink hover:bg-slate-800 text-white font-semibold rounded-xl transition cursor-pointer shadow-md"
+              className="flex-1 py-3 bg-emerald-50 border-2 border-emerald-600 text-emerald-700 font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-[3px_3px_0px_0px_#059669] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_0px_#059669] active:translate-y-[3px] active:shadow-none"
             >
               Final Onay Ver
             </button>
