@@ -179,15 +179,35 @@ export default function Layout({ children }) {
                             key={item.to}
                             to={item.to}
                             className={({ isActive }) =>
-                                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all duration-200 ${
+                                `relative flex items-center px-4 py-3 rounded-lg text-sm font-bold transition-colors duration-200 outline-none focus:outline-none ${
                                     isActive
-                                        ? "bg-paper-input text-ink border border-slate-300 shadow-sm"
-                                        : "text-slate-600 hover:bg-black/5 hover:text-ink border border-transparent"
+                                        ? "text-ink bg-transparent"
+                                        : "text-slate-600 hover:bg-paper-input hover:text-ink"
                                 }`
                             }
                         >
-                            {icons[item.icon]}
-                            {item.label}
+                            {({ isActive }) => (
+                                <>
+                                    {isActive && (
+                                        <svg 
+                                            className="absolute inset-0 w-full h-full text-yellow-400/60 pointer-events-none" 
+                                            preserveAspectRatio="none" 
+                                            viewBox="0 0 100 100"
+                                        >
+                                            <path 
+                                                d="M 2 50 C 30 20 70 20 98 50 C 70 80 30 80 2 60 Z" 
+                                                fill="currentColor" 
+                                            />
+                                        </svg>
+                                    )}
+                                    <div className="relative z-10 flex items-center gap-3">
+                                        <span className={isActive ? "text-ink" : ""}>
+                                            {icons[item.icon]}
+                                        </span>
+                                        {item.label}
+                                    </div>
+                                </>
+                            )}
                         </NavLink>
                     ))}
                 </nav>

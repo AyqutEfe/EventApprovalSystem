@@ -11,6 +11,8 @@ import {
     isSameMonth,
     isSameDay,
     isToday,
+    isBefore,
+    startOfToday,
 } from "date-fns";
 import { tr } from "date-fns/locale";
 import StatusBadge from "./StatusBadge";
@@ -39,10 +41,17 @@ export default function Calendar({ petitions = [] }) {
             if (!p.eventStartDate) return;
             const start = new Date(p.eventStartDate);
             const end = new Date(p.eventEndDate || p.eventStartDate);
-            // Ignore time portion for date mapping
-            let current = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-            const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
-            
+            let current = new Date(
+                start.getFullYear(),
+                start.getMonth(),
+                start.getDate(),
+            );
+            const endDay = new Date(
+                end.getFullYear(),
+                end.getMonth(),
+                end.getDate(),
+            );
+
             while (current <= endDay) {
                 const dateKey = format(current, "yyyy-MM-dd");
                 if (!map[dateKey]) map[dateKey] = [];
@@ -169,6 +178,7 @@ export default function Calendar({ petitions = [] }) {
                         const isSelected =
                             selectedDate && isSameDay(day, selectedDate);
                         const today = isToday(day);
+                        const isPast = isBefore(day, startOfToday());
 
                         return (
                             <div
@@ -180,31 +190,63 @@ export default function Calendar({ petitions = [] }) {
                                             : day,
                                     )
                                 }
-                                className={`min-h-[76px] p-2 border-b border-r border-slate-300 cursor-pointer transition-colors
-                  ${inMonth ? "" : "opacity-30"}
-                  ${isSelected ? "bg-yellow-500/20 ring-1 ring-inset ring-amber-600" : "hover:bg-paper-input"}
-                `}
+                                className={`relative min-h-[76px] p-2 border-b border-r border-slate-300 cursor-pointer transition-colors overflow-hidden
+                                  ${inMonth ? "" : "opacity-30"}
+                                  ${isSelected ? "bg-yellow-500/20 ring-1 ring-inset ring-amber-600" : "hover:bg-paper-input"}
+                                `}
                             >
+                                {/* Kırmızı Keçeli Kalem X İşareti (Geçmiş günler için) */}
+                                {isPast && (
+                                    <svg
+                                        className="absolute inset-0 w-full h-full text-red-500/40 pointer-events-none"
+                                        viewBox="0 0 100 100"
+                                        preserveAspectRatio="none"
+                                    >
+                                        <g
+                                            stroke="currentColor"
+                                            strokeWidth="6"
+                                            strokeLinecap="round"
+                                            fill="none"
+                                        >
+                                            {/* Çapraz çizgiler, hafif eğimli/rastgele görünüm */}
+                                            <path d="M 20 20 Q 50 45 80 80" />
+                                            <path d="M 80 20 Q 50 55 20 80" />
+                                        </g>
+                                    </svg>
+                                )}
+
                                 <div
-                                    className={`text-xs font-medium mb-0.5 w-6 h-6 flex items-center justify-center rounded-full
-                  ${today ? "bg-ink text-white" : "text-ink"}
-                `}
+                                    className={`relative z-10 text-xs font-bold mb-0.5 w-6 h-6 flex items-center justify-center
+                                      ${today ? "text-white" : "text-ink"}
+                                    `}
                                 >
-                                    {format(day, "d")}
+                                    {/* Bugün Keçeli Kalem Yuvarlağı */}
+                                    {today && (
+                                        <svg 
+                                            className="absolute inset-0 w-full h-full scale-[1.3] text-emerald-500 pointer-events-none -z-10 opacity-90" 
+                                            viewBox="0 0 100 100"
+                                        >
+                                            <path d="M 30 20 Q 70 15 80 50 Q 90 85 40 80 Q 15 75 20 40 Q 25 15 50 25" fill="currentColor" />
+                                        </svg>
+                                    )}
+                                    <span className="relative z-10">{format(day, "d")}</span>
                                 </div>
 
-                                <div className="space-y-1">
+                                <div className="space-y-1 relative z-10">
                                     {dayEvents.slice(0, 3).map((ev, j) => (
                                         <div
                                             key={j}
-                                            className={`text-[10px] font-medium px-1.5 py-0.5 rounded truncate ${statusColors[ev.status] || "bg-slate-200 text-ink"}`}
+                                            className={`text-[10px] font-medium px-1.5 py-0.5 rounded truncate shadow-sm 
+                                                ${statusColors[ev.status] || "bg-slate-200 text-ink"}
+                                                ${isPast ? "opacity-75" : ""}
+                                            `}
                                             title={`${ev.eventName} — ${ev.clubName}`}
                                         >
                                             {ev.eventName}
                                         </div>
                                     ))}
                                     {dayEvents.length > 3 && (
-                                        <div className="text-[10px] text-slate-500 px-1.5">
+                                        <div className="text-[10px] text-slate-500 font-bold px-1.5">
                                             +{dayEvents.length - 3} daha
                                         </div>
                                     )}
