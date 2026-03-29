@@ -64,7 +64,7 @@ public class DocumentService {
             buildPage2Table(document, petition, clubName);
 
             // ---- Dosyaya kaydet ----
-            return saveDocument(document, petition);
+            return saveDocument(document, petition, clubName);
 
         } catch (IOException e) {
             log.error("Belge oluşturulurken hata: {}", e.getMessage(), e);
@@ -372,14 +372,16 @@ public class DocumentService {
     // Dosyaya kaydetme
     // -----------------------------------------------------------------------
 
-    private String saveDocument(XWPFDocument document, Petition petition) throws IOException {
+    private String saveDocument(XWPFDocument document, Petition petition, String clubName) throws IOException {
         Path outputPath = Paths.get(outputDir);
         Files.createDirectories(outputPath);
 
         String safeEventName = petition.getEventName()
                 .replaceAll("[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ]", "_");
-        String fileName = String.format("dilekce_%s_%s.docx",
-                safeEventName, System.currentTimeMillis());
+        String safeClubName = clubName
+                .replaceAll("[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ]", "_");
+
+        String fileName = String.format("%s _ %s.docx", safeEventName, safeClubName);
 
         Path filePath = outputPath.resolve(fileName);
         try (FileOutputStream fos = new FileOutputStream(filePath.toFile())) {

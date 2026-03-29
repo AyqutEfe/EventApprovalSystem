@@ -58,7 +58,9 @@ export default function AdvisorPetitionDetailPage() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `dilekce_${id}.docx`);
+      const safeEventName = petition.eventName.replace(/[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ\s]/g, '_');
+      const safeClubName = petition.clubName.replace(/[^a-zA-Z0-9ğüşıöçĞÜŞİÖÇ\s]/g, '_');
+      link.setAttribute('download', `${safeEventName} _ ${safeClubName}.docx`);
       document.body.appendChild(link);
       link.click();
       link.remove();
