@@ -72,7 +72,7 @@ public class PetitionService {
         Petition savedPetition = petitionRepository.save(petition);
 
         // Belge oluştur
-        String filePath = documentService.generateDocument(savedPetition, club.getName(), president.getUsername());
+        String filePath = documentService.generateDocument(savedPetition, club.getName(), club.getAdvisor().getUsername());
         savedPetition.setFilePath(filePath);
         petitionRepository.save(savedPetition);
 

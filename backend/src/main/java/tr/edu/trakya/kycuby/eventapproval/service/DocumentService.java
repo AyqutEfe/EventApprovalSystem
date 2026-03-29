@@ -42,19 +42,19 @@ public class DocumentService {
     /**
      * Dilekçe verileriyle 2 sayfalık Word belgesi oluşturur.
      *
-     * @param petition      form verileri
-     * @param clubName      kulüp adı
-     * @param presidentName akademik danışman adı (imza alanında kullanılır)
+     * @param petition    form verileri
+     * @param clubName    kulüp adı
+     * @param advisorName akademik danışman adı (imza alanında kullanılır)
      * @return oluşturulan dosyanın yolu
      */
-    public String generateDocument(Petition petition, String clubName, String presidentName) {
+    public String generateDocument(Petition petition, String clubName, String advisorName) {
         try {
             XWPFDocument document = new XWPFDocument();
 
             setPageMargins(document);
 
             // ---- Sayfa 1: Dilekçe mektubu ----
-            buildPage1Letter(document, petition, clubName, presidentName);
+            buildPage1Letter(document, petition, clubName, advisorName);
 
             // ---- Sayfa sonu ----
             addPageBreak(document);
@@ -76,7 +76,7 @@ public class DocumentService {
     // -----------------------------------------------------------------------
 
     private void buildPage1Letter(XWPFDocument doc, Petition petition,
-            String clubName, String presidentName) {
+            String clubName, String advisorName) {
         // Üst boşluk
         addEmptyParagraphs(doc, 3);
 
@@ -122,7 +122,7 @@ public class DocumentService {
         // İmza bloğu (sağa hizalı)
         addRightAlignedParagraph(doc, "Adı-Soyadı-İmza", false);
         addRightAlignedParagraph(doc, "Topluluk Akademik Danışmanı", false);
-        addRightAlignedParagraph(doc, presidentName != null ? presidentName : "...", false);
+        addRightAlignedParagraph(doc, advisorName != null ? advisorName : "...", false);
 
         addEmptyParagraphs(doc, 3);
 
