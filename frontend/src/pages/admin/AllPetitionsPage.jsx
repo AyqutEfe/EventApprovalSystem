@@ -123,10 +123,10 @@ export default function AllPetitionsPage() {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b border-slate-300">
-                                <SortableHeader label="Etkinlik" sortKey="eventName" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
-                                <SortableHeader label="Tarih" sortKey="eventStartDate" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                                <SortableHeader label="Etkinlik Adı" sortKey="eventName" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                                <SortableHeader label="Belge Oluşturma Tarihi" sortKey="createdAt" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                                <SortableHeader label="Etkinlik Tarihi" sortKey="eventStartDate" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
                                 <SortableHeader label="Kulüp" sortKey="clubName" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
-                                <SortableHeader label="Başkan" sortKey="createdByUsername" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
                                 <SortableHeader label="Durum" sortKey="status" currentSortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
                                 <th className="text-right text-xs font-bold text-slate-600 uppercase tracking-wider px-6 py-4">
                                     İşlem
@@ -143,15 +143,15 @@ export default function AllPetitionsPage() {
                                         {p.eventName}
                                     </td>
                                     <td className="px-6 py-4 text-slate-700 text-sm">
+                                        {format(new Date(p.createdAt), "dd.MM.yyyy")}
+                                    </td>
+                                    <td className="px-6 py-4 text-slate-700 text-sm">
                                         {p.eventStartDate === p.eventEndDate
                                           ? format(new Date(p.eventStartDate), 'dd.MM.yyyy')
                                           : `${format(new Date(p.eventStartDate), 'dd.MM.yyyy')} - ${format(new Date(p.eventEndDate), 'dd.MM.yyyy')}`}
                                     </td>
                                     <td className="px-6 py-4 text-slate-700 text-sm">
                                         {p.clubName}
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-700 text-sm">
-                                        {p.createdByUsername}
                                     </td>
                                     <td className="px-6 py-4">
                                         <StatusBadge status={p.status} />
