@@ -19,7 +19,7 @@ const WEEKDAYS = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
 const statusColors = {
     PENDING_ADVISOR: "bg-amber-200 text-ink",
-    PENDING_ADMIN: "bg-yellow-200 text-ink",
+    PENDING_ADMIN: "bg-blue-200 text-ink",
     APPROVED: "bg-emerald-200 text-ink",
 };
 

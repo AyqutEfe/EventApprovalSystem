@@ -9,6 +9,7 @@
   --color-highlight-green: #39ff6a;
   --color-highlight-red: #ff3f6c;
   --color-highlight-yellow: #faff00;
+  --color-highlight-blue: #00faff;
   
   --font-handwriting: 'Kalam', cursive;
 }
@@ -117,4 +118,9 @@ body {
 .highlight-yellow::before {
   background-color: var(--color-highlight-yellow);
   transform: rotate(-0.5deg);
+}
+
+.highlight-blue::before {
+  background-color: var(--color-highlight-blue);
+  transform: rotate(0.5deg);
 }

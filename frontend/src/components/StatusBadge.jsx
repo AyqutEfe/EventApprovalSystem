@@ -4,8 +4,8 @@ const statusConfig = {
     classes: 'highlight-marker highlight-yellow',
   },
   PENDING_ADMIN: {
-    label: 'Admin Onayı Bekliyor',
-    classes: 'highlight-marker highlight-yellow',
+    label: 'Müdür Onayı Bekliyor',
+    classes: 'highlight-marker highlight-blue',
   },
   APPROVED: {
     label: 'Onaylandı',
